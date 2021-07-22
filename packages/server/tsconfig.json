@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "outDir": "./dist",
     "target": "es6",
     "module": "commonjs",
