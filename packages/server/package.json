@@ -19,5 +19,8 @@
   },
   "bugs": {
     "url": "https://github.com/ty-v1/ddd/issues"
+  },
+  "devDependencies": {
+    "ts-node": "^10.1.0"
   }
 }

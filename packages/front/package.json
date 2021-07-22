@@ -15,9 +15,38 @@
     "url": "git+https://github.com/ty-v1/ddd.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "dev": "NODE_ENV=development webpack serve --mode development --config webpack.dev.config.js --hot"
   },
   "bugs": {
     "url": "https://github.com/ty-v1/ddd/issues"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-is": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "recoil": "^0.3.1",
+    "styled-components": "^5.3.0"
+  },
+  "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@types/react": "^16.14.11",
+    "@types/react-dom": "^16.9.14",
+    "@types/react-router-dom": "^5.1.8",
+    "@types/recoil": "^0.0.9",
+    "css-loader": "^6.1.0",
+    "esbuild-loader": "^2.13.1",
+    "fork-ts-checker-webpack-plugin": "^6.2.12",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.1.0",
+    "postcss-loader": "^6.1.1",
+    "react-refresh": "^0.10.0",
+    "react-refresh-typescript": "^2.0.2",
+    "sass-loader": "^12.1.0",
+    "thread-loader": "^3.0.4",
+    "ts-loader": "^9.2.3",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }
