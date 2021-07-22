@@ -5,11 +5,6 @@
   "author": "ty-v1 <fmtyd509@gmail.com>",
   "homepage": "https://github.com/ty-v1/ddd#readme",
   "license": "ISC",
-  "main": "src/index",
-  "types": "src/index",
-  "files": [
-    "src"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ty-v1/ddd.git"
