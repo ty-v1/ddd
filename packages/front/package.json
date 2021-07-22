@@ -15,6 +15,8 @@
     "url": "git+https://github.com/ty-v1/ddd.git"
   },
   "scripts": {
+    "test": "jest",
+    "build": "NODE_ENV=production webpack --mode production --config webpack.config.js",
     "dev": "NODE_ENV=development webpack serve --mode development --config webpack.dev.config.js --hot"
   },
   "bugs": {
@@ -30,6 +32,8 @@
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@testing-library/react": "^12.0.0",
+    "@types/jest": "^26.0.24",
     "@types/react": "^16.14.11",
     "@types/react-dom": "^16.9.14",
     "@types/react-router-dom": "^5.1.8",
@@ -38,13 +42,16 @@
     "esbuild-loader": "^2.13.1",
     "fork-ts-checker-webpack-plugin": "^6.2.12",
     "html-webpack-plugin": "^5.3.2",
+    "jest": "^27.0.6",
     "mini-css-extract-plugin": "^2.1.0",
     "postcss-loader": "^6.1.1",
     "react-refresh": "^0.10.0",
     "react-refresh-typescript": "^2.0.2",
     "sass-loader": "^12.1.0",
     "thread-loader": "^3.0.4",
+    "ts-jest": "^27.0.4",
     "ts-loader": "^9.2.3",
+    "ts-node": "^10.1.0",
     "webpack": "^5.45.1",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
