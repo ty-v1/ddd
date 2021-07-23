@@ -10,11 +10,7 @@ export class ProjectId {
     };
   }
 
-  static from(value: string): ProjectId | undefined {
-    if (!isValidUlid(value)) {
-      return undefined;
-    }
-
+  static from(value: string): ProjectId {
     return new ProjectId(value.toUpperCase());
   }
 }
