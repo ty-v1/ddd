@@ -22,6 +22,7 @@
     "url": "https://github.com/ty-v1/ddd/issues"
   },
   "devDependencies": {
+    "@js-joda/core": "^3.2.0",
     "@nestjs/cli": "^8.0.2",
     "@nestjs/schematics": "^8.0.2",
     "@nestjs/testing": "^8.0.4",
@@ -42,6 +43,7 @@
     "@nestjs/platform-express": "^8.0.4",
     "@prisma/client": "^2.27.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "ulid": "^2.3.0"
   }
 }
