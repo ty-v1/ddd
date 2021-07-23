@@ -2,7 +2,7 @@ import { ProjectId } from '@/project/entity/ProjectId';
 import { LocalDateTime } from '@js-joda/core';
 
 export class ProjectEntity {
-  private constructor(
+  constructor(
     readonly id: ProjectId,
     private _name: string,
     private _description: string,
