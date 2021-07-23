@@ -1,12 +1,13 @@
 import { ProjectId } from '@/project/entity/ProjectId';
 import { ProjectEntity } from '@/project/entity/ProjectEntity';
+import { Observable } from 'rxjs';
 
 export interface ProjectRepository {
-  findById(id: ProjectId): Promise<ProjectEntity>;
+  findById(id: ProjectId): Observable<ProjectEntity>;
 
-  update(entity: ProjectEntity): Promise<boolean>;
+  update(entity: ProjectEntity): Observable<ProjectEntity>;
 
-  save(entity: ProjectEntity): Promise<boolean>;
+  save(entity: ProjectEntity): Observable<ProjectEntity>;
 
-  delete(id: ProjectId): Promise<boolean>;
+  delete(id: ProjectId): Observable<void>;
 }
