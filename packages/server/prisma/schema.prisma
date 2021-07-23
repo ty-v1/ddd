@@ -11,8 +11,8 @@ generator client {
 }
 
 model Project {
-  id        String @id @db.Char(26)
-  title     String @db.VarChar(256)
+  id String @id @db.Char(26)
+  name String @db.VarChar(256)
   description String @db.VarChar(512)
   created_at DateTime
   updated_at DateTime
