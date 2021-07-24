@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PROJECT_REPOSITORY, ProjectRepository } from '@/project/model/repository/ProjectRepository';
 import { map, mergeMap, Observable } from 'rxjs';
-import { ProjectId } from '@/project/model/entity/ProjectId';
-import { LocalDateTime } from '@js-joda/core';
 import { DetectProjectDuplicationDomainService } from '@/project/model/service/DetectProjectDuplicationDomainService';
 import { createProject } from '@/project/model/factory/ProjectEntityFactory';
 import { ProjectDto } from '@/project/usecase/ProjectDto';
