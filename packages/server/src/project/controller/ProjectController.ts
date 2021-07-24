@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, HttpCode, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { CreateProjectUseCase } from '@/project/usecase/CreateProjectUseCase';
 import { map, Observable } from 'rxjs';
 import { ProjectDto } from '@/project/usecase/ProjectDto';
@@ -7,10 +7,12 @@ import { ProjectResponse } from 'api/dist/response/project';
 import { UpdateProjectUseCase } from '@/project/usecase/UpdateProjectUseCase';
 import { DeleteProjectUseCase } from '@/project/usecase/DeleteProjectUseCase';
 import { ProjectId } from '@/project/model/entity/ProjectId';
+import { GetProjectUseCase } from '@/project/usecase/GetProjectUseCase';
 
 @Controller('projects')
 export class ProjectController {
   constructor(
+    readonly getProjectUseCase: GetProjectUseCase,
     readonly createProjectUseCase: CreateProjectUseCase,
     readonly updateProjectUseCase: UpdateProjectUseCase,
     readonly deleteProjectUseCase: DeleteProjectUseCase,
@@ -19,6 +21,11 @@ export class ProjectController {
   @Post()
   create(@Body() request: CreateProjectRequest): Observable<ProjectResponse> {
     return this.createProjectUseCase.exec(request).pipe(map((e) => createResponse(e)));
+  }
+
+  @Get(':id')
+  get(@Param('id') id: string): Observable<ProjectResponse> {
+    return this.getProjectUseCase.exec({ id: ProjectId.from(id) }).pipe(map((e) => createResponse(e)));
   }
 
   @Put(':id')
