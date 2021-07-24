@@ -3,7 +3,9 @@ import { ProjectEntity } from '@/project/model/entity/ProjectEntity';
 import { Observable } from 'rxjs';
 
 export interface ProjectRepository {
-  findById(id: ProjectId): Observable<ProjectEntity>;
+  findById(id: ProjectId): Observable<ProjectEntity | undefined>;
+
+  findByName(name: string): Observable<ProjectEntity | undefined>;
 
   update(entity: ProjectEntity): Observable<ProjectEntity>;
 
@@ -11,3 +13,5 @@ export interface ProjectRepository {
 
   delete(id: ProjectId): Observable<void>;
 }
+
+export const PROJECT_REPOSITORY = 'project-repository';
