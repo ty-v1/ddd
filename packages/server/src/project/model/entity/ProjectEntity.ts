@@ -1,4 +1,4 @@
-import { ProjectId } from '@/project/entity/ProjectId';
+import { ProjectId } from '@/project/model/entity/ProjectId';
 import { LocalDateTime } from '@js-joda/core';
 
 export class ProjectEntity {
