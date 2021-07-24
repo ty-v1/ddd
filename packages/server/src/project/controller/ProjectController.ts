@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CreateProjectUseCase, ProjectDto } from '@/project/usecase/CreateProjectUseCase';
+import { CreateProjectUseCase } from '@/project/usecase/CreateProjectUseCase';
 import { Observable } from 'rxjs';
+import { ProjectDto } from '@/project/usecase/ProjectDto';
 
 @Controller('projects')
 export class ProjectController {
