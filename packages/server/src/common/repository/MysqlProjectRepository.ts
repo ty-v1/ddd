@@ -1,10 +1,10 @@
-import { ProjectRepository } from '@/common/infrastructure/ProjectRepository';
-import { ProjectId } from '@/project/entity/ProjectId';
-import { ProjectEntity } from '@/project/entity/ProjectEntity';
+import { ProjectRepository } from '@/project/model/repository/ProjectRepository';
+import { ProjectId } from '@/project/model/entity/ProjectId';
+import { ProjectEntity } from '@/project/model/entity/ProjectEntity';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma.service';
 import { Observable } from 'rxjs';
-import { restoreProjectEntity } from '@/project/entity/ProjectEntityFactory';
+import { restoreProjectEntity } from '@/project/model/factory/ProjectEntityFactory';
 import { MysqlDateTimeFormat } from '@/util/mysql-date-time';
 
 @Injectable()

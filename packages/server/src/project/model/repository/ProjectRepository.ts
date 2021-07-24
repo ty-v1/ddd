@@ -1,5 +1,5 @@
-import { ProjectId } from '@/project/entity/ProjectId';
-import { ProjectEntity } from '@/project/entity/ProjectEntity';
+import { ProjectId } from '@/project/model/entity/ProjectId';
+import { ProjectEntity } from '@/project/model/entity/ProjectEntity';
 import { Observable } from 'rxjs';
 
 export interface ProjectRepository {
