@@ -5,6 +5,7 @@ import { ProjectId } from '@/project/model/entity/ProjectId';
 import { LocalDateTime } from '@js-joda/core';
 import { DetectProjectDuplicationDomainService } from '@/project/model/service/DetectProjectDuplicationDomainService';
 import { createProject } from '@/project/model/factory/ProjectEntityFactory';
+import { ProjectDto } from '@/project/usecase/ProjectDto';
 
 @Injectable()
 export class CreateProjectUseCase {
@@ -40,12 +41,4 @@ export class CreateProjectUseCase {
 export type CreateProjectProps = {
   readonly name: string;
   readonly description: string;
-};
-
-export type ProjectDto = {
-  readonly id: ProjectId;
-  readonly name: string;
-  readonly description: string;
-  readonly createDateTime: LocalDateTime;
-  readonly updateDateTime: LocalDateTime;
 };
