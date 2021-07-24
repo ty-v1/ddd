@@ -5,6 +5,23 @@ info:
   version: 1.0.0
 paths:
   /projects/{projectId}:
+    get:
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: string
+          required: true
+          description: プロジェクトID
+      summary: プロジェクト取得(1件)
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+
     post:
       parameters:
         - in: path
