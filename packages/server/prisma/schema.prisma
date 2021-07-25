@@ -16,6 +16,8 @@ model Project {
   description String @db.VarChar(512)
   created_at DateTime
   updated_at DateTime
+
+  labels Label[]
 }
 
 model Label {
@@ -24,6 +26,11 @@ model Label {
   description String @db.VarChar(512)
   is_default Boolean
   color String @db.Char(7)
+  project_id String @db.Char(26)
   created_at DateTime
   updated_at DateTime
+
+  project Project @relation(fields: [project_id], references: [id])
+
+  @@index([project_id], name: "project")
 }
