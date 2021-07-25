@@ -20,7 +20,12 @@ export class MysqlLabelRepository implements LabelRepository {
 
   findById(id: LabelId): Observable<LabelEntity | undefined> {
     const query = this.prisma.label.findUnique({
-      where: { id: id.value },
+      where: {
+        id: id.value,
+      },
+      include: {
+        project: false,
+      },
     });
 
     return from(query).pipe(
@@ -38,6 +43,9 @@ export class MysqlLabelRepository implements LabelRepository {
     const query = this.prisma.label.findMany({
       where: {
         project_id: id.value,
+      },
+      include: {
+        project: false,
       },
     });
 
