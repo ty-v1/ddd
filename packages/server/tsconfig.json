@@ -17,6 +17,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
+    "strict": true,
     "incremental": true,
     "skipLibCheck": true
   },
