@@ -17,3 +17,13 @@ model Project {
   created_at DateTime
   updated_at DateTime
 }
+
+model Label {
+  id String @id @db.Char(26)
+  name String @db.VarChar(32)
+  description String @db.VarChar(512)
+  is_default Boolean
+  color String @db.Char(7)
+  created_at DateTime
+  updated_at DateTime
+}
