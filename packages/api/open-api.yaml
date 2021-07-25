@@ -1,0 +1,126 @@
+openapi: 3.0.3
+info:
+  title: DDD
+  description: Title
+  version: 1.0.0
+paths:
+  /projects/{projectId}:
+    get:
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: string
+          required: true
+          description: プロジェクトID
+      summary: プロジェクト取得(1件)
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+
+    post:
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: string
+          required: true
+          description: プロジェクトID
+      summary: プロジェクトの作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+
+    put:
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: string
+          required: true
+          description: プロジェクトID
+      summary: プロジェクトの更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequest'
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+
+    delete:
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: string
+          required: true
+          description: プロジェクトID
+      summary: プロジェクトの削除
+      responses:
+        '204':
+          description: 成功時
+
+components:
+  schemas:
+    CreateProjectRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          description: プロジェクト名
+        description:
+          type: string
+          maxLength: 256
+          description: プロジェクトの説明
+
+    UpdateProjectRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          description: プロジェクト名
+        description:
+          type: string
+          maxLength: 256
+          description: プロジェクトの説明
+
+    ProjectResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 01FBBSWQX4EKDJ4VQHFNBCRPZQ
+        name:
+          type: string
+          example: MyWebApp
+        description:
+          type: string
+          example: 自作Webアプリ
+        createDateTime:
+          type: string
+          example: 2021-01-01T11:00:00
+        updateDateTime:
+          type: string
+          example: 2021-01-01T11:00:00
