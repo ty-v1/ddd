@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PROJECT_REPOSITORY, ProjectRepository } from '@/project/model/repository/ProjectRepository';
 import { ProjectId } from '@/project/model/entity/ProjectId';
 import { mergeMap, Observable } from 'rxjs';
+import { isNil } from 'lodash-es';
 
 @Injectable()
 export class DeleteProjectUseCase {
@@ -14,7 +15,7 @@ export class DeleteProjectUseCase {
     // TODO カンバンおよびTaskの削除
     return this.projectRepository.findById(props.id).pipe(
       mergeMap((e) => {
-        if (e === undefined) {
+        if (isNil(e)) {
           // TODO
           throw new Error('');
         }

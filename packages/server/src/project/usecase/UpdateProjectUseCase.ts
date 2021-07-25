@@ -3,6 +3,7 @@ import { PROJECT_REPOSITORY, ProjectRepository } from '@/project/model/repositor
 import { ProjectId } from '@/project/model/entity/ProjectId';
 import { map, mergeMap, Observable } from 'rxjs';
 import { ProjectDto } from '@/project/usecase/ProjectDto';
+import { isNil } from 'lodash-es';
 
 @Injectable()
 export class UpdateProjectUseCase {
@@ -14,7 +15,7 @@ export class UpdateProjectUseCase {
   exec(props: UpdateProjectProps): Observable<ProjectDto> {
     return this.projectRepository.findById(props.id).pipe(
       mergeMap((e) => {
-        if (e === undefined) {
+        if (isNil(e)) {
           // TODO
           throw new Error('');
         }
