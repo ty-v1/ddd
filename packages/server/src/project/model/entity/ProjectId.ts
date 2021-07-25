@@ -1,13 +1,10 @@
 import { ulid } from 'ulid';
-import { isValidUlid } from '@/util/ulid';
 
 export class ProjectId {
   constructor(readonly value: string) {}
 
   static new(): ProjectId {
-    return {
-      value: ulid(),
-    };
+    return new ProjectId(ulid());
   }
 
   static from(value: string): ProjectId {
