@@ -3,6 +3,7 @@ import { PROJECT_REPOSITORY, ProjectRepository } from '@/project/model/repositor
 import { map, Observable } from 'rxjs';
 import { ProjectDto } from '@/project/usecase/ProjectDto';
 import { ProjectId } from '@/project/model/entity/ProjectId';
+import { isNil } from 'lodash-es';
 
 @Injectable()
 export class GetProjectUseCase {
@@ -14,7 +15,7 @@ export class GetProjectUseCase {
   exec(props: GetProjectProps): Observable<ProjectDto> {
     return this.projectRepository.findById(props.id).pipe(
       map((e) => {
-        if (e === undefined) {
+        if (isNil(e)) {
           // TODO
           throw new Error('');
         }
