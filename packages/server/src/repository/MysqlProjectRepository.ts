@@ -13,7 +13,12 @@ export class MysqlProjectRepository implements ProjectRepository {
 
   findById(id: ProjectId): Observable<ProjectEntity | undefined> {
     const query = this.prisma.project.findUnique({
-      where: { id: id.value },
+      where: {
+        id: id.value,
+      },
+      include: {
+        labels: true,
+      },
     });
     return from(query).pipe(map((e) => (e !== null ? restoreProjectEntity(e) : undefined)));
   }
@@ -27,6 +32,9 @@ export class MysqlProjectRepository implements ProjectRepository {
         created_at: convert(entity.createDateTime).toDate(),
         updated_at: convert(entity.updateDateTime).toDate(),
       },
+      include: {
+        labels: true,
+      },
     });
     return from(query).pipe(map((e) => restoreProjectEntity(e)));
   }
@@ -35,6 +43,9 @@ export class MysqlProjectRepository implements ProjectRepository {
     const query = this.prisma.project.update({
       where: {
         id: entity.id.value,
+      },
+      include: {
+        labels: true,
       },
       data: {
         id: entity.id.value,
@@ -51,6 +62,9 @@ export class MysqlProjectRepository implements ProjectRepository {
       where: {
         id: id.value,
       },
+      include: {
+        labels: true,
+      },
     });
     return from(query).pipe(map(() => void 0));
   }
@@ -58,6 +72,9 @@ export class MysqlProjectRepository implements ProjectRepository {
   findByName(name: string): Observable<ProjectEntity | undefined> {
     const query = this.prisma.project.findFirst({
       where: { name },
+      include: {
+        labels: true,
+      },
     });
     return from(query).pipe(map((e) => (e !== null ? restoreProjectEntity(e) : undefined)));
   }
