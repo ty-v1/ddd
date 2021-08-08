@@ -1,5 +1,7 @@
 import { ProjectId } from '@/project/model/entity/ProjectId';
 import { LocalDateTime } from '@js-joda/core';
+import { LabelId } from '@/label/model/entity/LabelId';
+import { Set } from 'typescript-collections';
 
 export class ProjectEntity {
   constructor(
@@ -8,6 +10,7 @@ export class ProjectEntity {
     private _description: string,
     readonly createDateTime: LocalDateTime,
     readonly updateDateTime: LocalDateTime,
+    private readonly labelSet: Set<LabelId>,
   ) {}
 
   get name(): string {
@@ -24,5 +27,9 @@ export class ProjectEntity {
 
   changeDescription(description: string): void {
     this._description = description;
+  }
+
+  isFull(): boolean {
+    return this.labelSet.size() === 24;
   }
 }
