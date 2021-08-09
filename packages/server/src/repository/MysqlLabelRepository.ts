@@ -8,6 +8,7 @@ import { ProjectId } from '@/project/model/entity/ProjectId';
 import { isNil } from 'lodash-es';
 import { restoreLabelEntity } from '@/label/model/entity/LabelFactory';
 import { convert, LocalDateTime } from '@js-joda/core';
+import { Color } from '@/label/model/entity/Color';
 
 @Injectable()
 export class MysqlLabelRepository implements LabelRepository {
@@ -86,5 +87,17 @@ export class MysqlLabelRepository implements LabelRepository {
     });
 
     return from(query).pipe(map((e) => restoreLabelEntity(e)));
+  }
+
+  existsSameLabel(projectId: ProjectId, color: Color, name: string): Observable<boolean> {
+    const query = this.prisma.label.count({
+      where: {
+        name,
+        project_id: projectId.value,
+        color: color.rgb,
+      },
+    });
+
+    return from(query).pipe(map((e) => e > 0));
   }
 }
