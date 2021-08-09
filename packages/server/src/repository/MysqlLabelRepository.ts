@@ -56,11 +56,11 @@ export class MysqlLabelRepository implements LabelRepository {
     );
   }
 
-  save(projectId: ProjectId, entity: LabelEntity): Observable<LabelEntity> {
+  save(entity: LabelEntity): Observable<LabelEntity> {
     const query = this.prisma.label.create({
       data: {
         id: entity.id.value,
-        project_id: projectId.value,
+        project_id: entity.projectId.value,
         name: entity.name,
         description: entity.description,
         color: entity.color.rgb,

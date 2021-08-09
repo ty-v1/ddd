@@ -9,7 +9,7 @@ export class LabelEntity {
     private _name: string,
     private _description: string,
     private _color: Color,
-    private readonly projectId: ProjectId,
+    readonly projectId: ProjectId,
     readonly createDateTime: LocalDateTime,
     readonly updateDateTime: LocalDateTime,
   ) {}
