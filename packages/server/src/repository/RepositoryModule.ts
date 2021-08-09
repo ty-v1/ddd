@@ -18,6 +18,6 @@ import { MysqlLabelRepository } from '@/repository/MysqlLabelRepository';
       useClass: MysqlLabelRepository,
     },
   ],
-  exports: [PROJECT_REPOSITORY],
+  exports: [PROJECT_REPOSITORY, LABEL_REPOSITORY],
 })
 export class RepositoryModule {}
