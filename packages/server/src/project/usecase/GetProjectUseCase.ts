@@ -3,7 +3,7 @@ import { PROJECT_REPOSITORY, ProjectRepository } from '@/project/model/repositor
 import { map, Observable } from 'rxjs';
 import { ProjectDto } from '@/project/usecase/ProjectDto';
 import { ProjectId } from '@/project/model/entity/ProjectId';
-import { isNil } from 'lodash-es';
+import { isNil } from 'lodash';
 
 @Injectable()
 export class GetProjectUseCase {

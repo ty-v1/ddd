@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PROJECT_REPOSITORY, ProjectRepository } from '@/project/model/repository/ProjectRepository';
 import { ProjectId } from '@/project/model/entity/ProjectId';
 import { mergeMap, Observable } from 'rxjs';
-import { isNil } from 'lodash-es';
+import { isNil } from 'lodash';
 
 @Injectable()
 export class DeleteProjectUseCase {
