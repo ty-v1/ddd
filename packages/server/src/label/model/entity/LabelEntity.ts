@@ -1,13 +1,15 @@
-import { ProjectId } from '@/project/model/entity/ProjectId';
 import { LocalDateTime } from '@js-joda/core';
 import { Color } from '@/label/model/entity/Color';
+import { LabelId } from '@/label/model/entity/LabelId';
+import { ProjectId } from '@/project/model/entity/ProjectId';
 
 export class LabelEntity {
   constructor(
-    readonly id: ProjectId,
+    readonly id: LabelId,
     private _name: string,
     private _description: string,
     private _color: Color,
+    private readonly projectId: ProjectId,
     readonly createDateTime: LocalDateTime,
     readonly updateDateTime: LocalDateTime,
   ) {}
