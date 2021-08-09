@@ -5,7 +5,7 @@ import { LabelId } from '@/label/model/entity/LabelId';
 import { from, map, mergeAll, Observable } from 'rxjs';
 import { LabelEntity } from '@/label/model/entity/LabelEntity';
 import { ProjectId } from '@/project/model/entity/ProjectId';
-import { isNil } from 'lodash-es';
+import { isNil } from 'lodash';
 import { restoreLabelEntity } from '@/label/model/entity/LabelFactory';
 import { convert, LocalDateTime } from '@js-joda/core';
 import { Color } from '@/label/model/entity/Color';

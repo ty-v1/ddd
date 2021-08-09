@@ -3,7 +3,7 @@ import { ProjectId } from '@/project/model/entity/ProjectId';
 import { map, Observable } from 'rxjs';
 import { Inject, Injectable } from '@nestjs/common';
 import { PROJECT_REPOSITORY, ProjectRepository } from '@/project/model/repository/ProjectRepository';
-import { isNil } from 'lodash-es';
+import { isNil } from 'lodash';
 
 @Injectable()
 export class DetectProjectExistenceDomainServiceImpl implements DetectProjectExistenceDomainService {
