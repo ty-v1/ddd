@@ -9,6 +9,7 @@ import {
 } from '@/shared/project/DetectProjectExistenceDomainService';
 import { LabelId } from '@/label/model/entity/LabelId';
 import { isNil } from 'lodash';
+import { LabelDto } from '@/label/model/usecase/LabelDto';
 
 @Injectable()
 export class UpdateLabelUseCase {
@@ -20,32 +21,32 @@ export class UpdateLabelUseCase {
     private readonly detectProjectExistenceDomainService: DetectProjectExistenceDomainService,
   ) {}
 
-  exec(props: UpdateLabelProps): Observable<void> {
+  exec(props: UpdateLabelProps): Observable<LabelDto> {
     // TODO バリデーション
     const labelId = LabelId.from(props.id);
     const color = Color.from(props.color);
     const name = props.name;
 
     return this.labelRepository.findById(labelId).pipe(
-      mergeMap((e) => {
-        if (isNil(e)) {
+      mergeMap((entity) => {
+        if (isNil(entity)) {
           // TODO
           throw new Error();
         }
 
-        if (e.isSame(name, color)) {
+        if (entity.isSame(name, color)) {
           // TODO
           throw new Error();
         }
 
-        return this.detectLabelDuplicationDomainService.exec(e).pipe(
+        return this.detectLabelDuplicationDomainService.exec(entity).pipe(
           mergeMap((isDuplicated) => {
             if (isDuplicated) {
               // TODO
               throw new Error();
             }
 
-            return this.labelRepository.delete(labelId);
+            return this.labelRepository.update(entity);
           }),
         );
       }),
