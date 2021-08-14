@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { count, map, mergeMap, Observable } from 'rxjs';
+import { concatMap, count, map, mergeMap, Observable } from 'rxjs';
 import { ProjectId } from '@/project/model/entity/ProjectId';
 import { LABEL_REPOSITORY, LabelRepository } from '@/label/model/repository/LabelRepository';
 import { DetectLabelDuplicationDomainService } from '@/label/model/service/DetectLabelDuplicationDomainService';
-import { Color } from '@/label/model/entity/Color';
 import { createLabelEntity } from '@/label/model/entity/LabelFactory';
 import {
   DETECT_PROJECT_EXISTENCE_DOMAIN_SERVICE,
@@ -24,8 +23,6 @@ export class CreateLabelUseCase {
   exec(props: CreateLabelProps): Observable<LabelDto> {
     // TODO バリデーション
     const projectId = ProjectId.from(props.projectId);
-    const color = Color.from(props.color);
-    const name = props.name;
 
     return this.detectProjectExistenceDomainService.exec(projectId).pipe(
       mergeMap((e) => {
@@ -37,17 +34,24 @@ export class CreateLabelUseCase {
         return this.labelRepository.findByProjectId(projectId);
       }),
       count(),
-      map((e) => {
+      concatMap((e) => {
         if (e > 24) {
           // TODO
           throw new Error('');
         }
 
-        if (this.detectLabelDuplicationDomainService.exec({ projectId, color, name })) {
-          throw new Error('');
-        }
+        const entity = createLabelEntity({ ...props });
 
-        return createLabelEntity({ ...props });
+        return this.detectLabelDuplicationDomainService.exec(entity).pipe(
+          mergeMap((isDuplicated) => {
+            if (isDuplicated) {
+              // TODO
+              throw new Error();
+            }
+
+            return this.labelRepository.save(entity);
+          }),
+        );
       }),
       mergeMap((e) => {
         return this.labelRepository.save(e).pipe(

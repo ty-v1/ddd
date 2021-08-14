@@ -37,4 +37,8 @@ export class LabelEntity {
   changeColor(color: Color): void {
     this._color = color;
   }
+
+  isSame(name: string, color: Color): boolean {
+    return this._name === name && this._color.rgb === color.rgb;
+  }
 }
