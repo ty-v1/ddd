@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { LABEL_REPOSITORY, LabelRepository } from '@/label/model/repository/LabelRepository';
-import { NewLabel } from '@/label/model/service/NewLabel';
 import { Observable } from 'rxjs';
+import { LabelEntity } from '@/label/model/entity/LabelEntity';
 
 @Injectable()
 export class DetectLabelDuplicationDomainService {
@@ -10,7 +10,7 @@ export class DetectLabelDuplicationDomainService {
     private readonly labelRepository: LabelRepository,
   ) {}
 
-  exec(label: NewLabel): Observable<boolean> {
-    return this.labelRepository.existsSameLabel(label.projectId, label.color, label.name);
+  exec(entity: LabelEntity): Observable<boolean> {
+    return this.labelRepository.existsSameLabel(entity.projectId, entity.color, entity.name);
   }
 }
