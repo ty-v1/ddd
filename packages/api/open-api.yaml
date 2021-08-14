@@ -184,6 +184,10 @@ components:
           type: string
           maxLength: 512
           description: ラベルの説明
+        projectId:
+          type: string
+          format: uuid
+          description: プロジェクトのID
 
     UpdateLabelRequest:
       type: object
@@ -200,6 +204,10 @@ components:
           type: string
           description: ラベルの色(RGB形式)
           example: #FE3344
+        projectId:
+          type: string
+          format: uuid
+          description: プロジェクトのID
 
     LabelResponse:
       type: object
