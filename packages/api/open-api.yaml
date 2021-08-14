@@ -116,12 +116,12 @@ paths:
     delete:
       parameters:
         - in: path
-          name: projectId
+          name: labelId
           schema:
             type: string
           required: true
-          description: プロジェクトID
-      summary: プロジェクトの削除
+          description: ラベルID
+      summary: ラベルの削除
       responses:
         '204':
           description: 成功時
