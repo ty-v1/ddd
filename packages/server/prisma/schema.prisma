@@ -18,6 +18,7 @@ model Project {
   updated_at DateTime
 
   labels Label[]
+  tasks Task[]
 }
 
 model Label {
@@ -31,6 +32,31 @@ model Label {
   updated_at DateTime
 
   project Project @relation(fields: [project_id], references: [id])
+  tasks LabelsOnTasks[]
 
   @@index([project_id], name: "project")
+}
+
+model Task {
+  id String @id @db.Char(26)
+  name String @db.VarChar(256)
+  description String @db.VarChar(5192)
+  project_id String @db.Char(26)
+  created_at DateTime
+  updated_at DateTime
+
+  project Project @relation(fields: [project_id], references: [id])
+  labels LabelsOnTasks[]
+
+  @@index([project_id], name: "project")
+}
+
+model LabelsOnTasks {
+  task Task @relation(fields: [task_id], references: [id])
+  task_id String @db.Char(26)
+
+  label Label @relation(fields: [label_id], references: [id])
+  label_id String @db.Char(26)
+
+  @@id([task_id, label_id])
 }
