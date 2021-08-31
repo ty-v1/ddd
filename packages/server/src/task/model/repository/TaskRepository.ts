@@ -5,6 +5,8 @@ import { TaskStatus } from '@/task/model/entity/TaskStatus';
 import { TaskId } from '@/task/model/entity/TaskId';
 
 export interface TaskRepository {
+  findById(id: TaskId): Observable<TaskEntity | undefined>;
+
   findByProjectId(projectId: ProjectId): Observable<TaskEntity>;
 
   findByProjectIdAndStatus(projectId: ProjectId, status: TaskStatus): Observable<TaskEntity>;
