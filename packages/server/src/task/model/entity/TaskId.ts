@@ -1,15 +1,15 @@
 import { ulid } from 'ulid';
 import { util } from 'typescript-collections';
 
-export class ProjectId {
+export class TaskId {
   constructor(readonly value: string) {}
 
-  static new(): ProjectId {
-    return new ProjectId(ulid());
+  static new(): TaskId {
+    return new TaskId(ulid());
   }
 
-  static from(value: string): ProjectId {
-    return new ProjectId(value.toUpperCase());
+  static from(value: string): TaskId {
+    return new TaskId(value.toUpperCase());
   }
 
   toString(): string {
