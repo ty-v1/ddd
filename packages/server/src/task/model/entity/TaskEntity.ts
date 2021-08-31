@@ -5,6 +5,7 @@ import { LabelId } from '@/label/model/entity/LabelId';
 import { LocalDateTime } from '@js-joda/core';
 import { TaskStatus } from '@/task/model/entity/TaskStatus';
 import { Timer } from '@/task/model/entity/Timer';
+import { TimerHistory } from '@/task/model/entity/TimerHistory';
 
 export class TaskEntity {
   constructor(
@@ -14,8 +15,7 @@ export class TaskEntity {
     readonly projectId: ProjectId,
     private readonly labelSet: Set<LabelId>,
     private _status: TaskStatus,
-    // DBの都合上，publicだが外からは操作しない
-    readonly timer: Timer,
+    private readonly timer: Timer,
     readonly createDateTime: LocalDateTime,
   ) {}
 
@@ -29,6 +29,14 @@ export class TaskEntity {
 
   get labelIds(): Array<LabelId> {
     return this.labelSet.toArray().sort((a, b) => a.compare(b));
+  }
+
+  get status(): TaskStatus {
+    return this._status;
+  }
+
+  get histories(): readonly TimerHistory[] {
+    return this.timer.histories;
   }
 
   addLabel(labelId: LabelId): void {
