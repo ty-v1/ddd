@@ -1,7 +1,7 @@
 import { ProjectEntity } from '@/project/model/entity/ProjectEntity';
-import { Project } from '@prisma/client';
 import { LocalDateTime, nativeJs } from '@js-joda/core';
 import { ProjectId } from '@/project/model/entity/ProjectId';
+import { Project } from '@prisma/client';
 
 export const restoreProjectEntity: (dao: Project) => ProjectEntity = (dao) => {
   return new ProjectEntity(
