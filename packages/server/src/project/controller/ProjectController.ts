@@ -2,12 +2,11 @@ import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nest
 import { CreateProjectUseCase } from '@/project/usecase/CreateProjectUseCase';
 import { map, Observable } from 'rxjs';
 import { ProjectDto } from '@/project/usecase/ProjectDto';
-import { CreateProjectRequest, UpdateProjectRequest } from 'api/dist/request/project';
-import { ProjectResponse } from 'api/dist/response/project';
 import { UpdateProjectUseCase } from '@/project/usecase/UpdateProjectUseCase';
 import { DeleteProjectUseCase } from '@/project/usecase/DeleteProjectUseCase';
 import { ProjectId } from '@/project/model/entity/ProjectId';
 import { GetProjectUseCase } from '@/project/usecase/GetProjectUseCase';
+import { CreateProjectRequest, ProjectResponse, UpdateProjectRequest } from 'api';
 
 @Controller('projects')
 export class ProjectController {
