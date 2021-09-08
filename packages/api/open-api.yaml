@@ -131,6 +131,9 @@ components:
   schemas:
     CreateProjectRequest:
       type: object
+      required:
+        - description
+        - name
       properties:
         name:
           type: string
@@ -143,6 +146,9 @@ components:
 
     UpdateProjectRequest:
       type: object
+      required:
+        - description
+        - name
       properties:
         name:
           type: string
@@ -155,6 +161,12 @@ components:
 
     ProjectResponse:
       type: object
+      required:
+        - id
+        - name
+        - description
+        - createDateTime
+        - updateDateTime
       properties:
         id:
           type: string
@@ -175,6 +187,10 @@ components:
 
     CreateLabelRequest:
       type: object
+      required:
+        - name
+        - description
+        - projectId
       properties:
         name:
           type: string
@@ -191,6 +207,11 @@ components:
 
     UpdateLabelRequest:
       type: object
+      required:
+        - name
+        - description
+        - color
+        - projectId
       properties:
         name:
           type: string
@@ -211,6 +232,13 @@ components:
 
     LabelResponse:
       type: object
+      required:
+        - id
+        - name
+        - description
+        - color
+        - createDateTime
+        - updateDateTime
       properties:
         id:
           type: string
