@@ -5,7 +5,7 @@
   "author": "ty-v1 <fmtyd509@gmail.com>",
   "homepage": "https://github.com/ty-v1/ddd#readme",
   "license": "ISC",
-  "main": "dist/index",
+  "main": "dist/index.js",
   "types": "dist/index",
   "files": [
     "dist"
@@ -15,9 +15,13 @@
     "url": "git+https://github.com/ty-v1/ddd.git"
   },
   "scripts": {
+    "generate": "rimraf ./src && openapi-generator-cli generate -g typescript-rxjs -i ./open-api.yaml -o ./src",
     "build": "rimraf ./dist && tsc"
   },
   "bugs": {
     "url": "https://github.com/ty-v1/ddd/issues"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.3.10"
   }
 }
