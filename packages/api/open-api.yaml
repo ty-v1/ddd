@@ -126,6 +126,89 @@ paths:
         '204':
           description: 成功時
 
+  /tasks/:
+    post:
+      summary: タスクの作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+
+  /tasks/{taskId}:
+    put:
+      parameters:
+        - in: path
+          name: taskId
+          schema:
+            type: string
+          required: true
+          description: タスクID
+      summary: タスクの更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+
+    delete:
+      parameters:
+        - in: path
+          name: taskId
+          schema:
+            type: string
+          required: true
+          description: タスクID
+      summary: タスクの削除
+      responses:
+        '204':
+          description: 成功時
+
+  /tasks/{taskId}/start_timer:
+    post:
+      parameters:
+        - in: path
+          name: taskId
+          schema:
+            type: string
+          required: true
+          description: タスクID
+      summary: 計測時間の記録開始
+      responses:
+        '200':
+          description: 成功時
+
+  /tasks/{taskId}/suspend_timer:
+    post:
+      parameters:
+        - in: path
+          name: taskId
+          schema:
+            type: string
+          required: true
+          description: タスクID
+      summary: 計測時間の記録を一時停止
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuspendTimerResponse'
 
 components:
   schemas:
@@ -146,9 +229,6 @@ components:
 
     UpdateProjectRequest:
       type: object
-      required:
-        - description
-        - name
       properties:
         name:
           type: string
@@ -207,11 +287,6 @@ components:
 
     UpdateLabelRequest:
       type: object
-      required:
-        - name
-        - description
-        - color
-        - projectId
       properties:
         name:
           type: string
@@ -259,3 +334,109 @@ components:
         updateDateTime:
           type: string
           example: 2021-01-01T11:00:00
+
+    CreateTaskRequest:
+      type: object
+      required:
+        - name
+        - description
+        - estimatedTime
+        - projectId
+        - labelIds
+      properties:
+        name:
+          type: string
+          maxLength: 32
+          description: タスク名
+        description:
+          type: string
+          maxLength: 512
+          description: タスクの説明
+        estimatedTime:
+          type: string
+          description: 見積もり時間
+          example: 01:00
+        projectId:
+          type: string
+          format: uuid
+          description: プロジェクトのID
+        labelIds:
+          type: array
+          description: ラベル一覧
+          items:
+            type: string
+            format: uuid
+
+    UpdateTaskRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 32
+          description: タスク名
+        description:
+          type: string
+          maxLength: 512
+          description: タスクの説明
+        estimatedTime:
+          type: string
+          description: 見積もり時間
+          example: 01:00
+        labelIds:
+          type: array
+          description: ラベル一覧
+          items:
+            type: string
+            format: uuid
+
+    TaskResponse:
+      type: object
+      required:
+        - name
+        - description
+        - projectId
+        - labelIds
+        - status
+        - estimatedTime
+        - elapsedTime
+        - createDateTime
+      properties:
+        name:
+          type: string
+          maxLength: 32
+          description: タスク名
+        description:
+          type: string
+          maxLength: 512
+          description: タスクの説明
+        projectId:
+          type: string
+          format: uuid
+          description: プロジェクトのID
+        estimatedTime:
+          type: string
+          format: uuid
+          description: 見積もり時間
+          example: 01:00
+        elapsedTime:
+          type: string
+          format: uuid
+          description: 計測時間
+          example: 01:00
+        labelIds:
+          type: array
+          description: ラベル一覧
+          items:
+            type: string
+            format: uuid
+
+    SuspendTimerResponse:
+      type: object
+      required:
+        - elapsedTime
+      properties:
+        elapsedTime:
+          type: string
+          format: uuid
+          description: 計測時間
+          example: 01:00
