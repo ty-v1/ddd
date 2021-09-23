@@ -13,19 +13,13 @@
 
 /**
  * @export
- * @interface UpdateProjectRequest
+ * @interface SuspendTimerResponse
  */
-export interface UpdateProjectRequest {
+export interface SuspendTimerResponse {
     /**
-     * プロジェクト名
+     * 計測時間
      * @type {string}
-     * @memberof UpdateProjectRequest
+     * @memberof SuspendTimerResponse
      */
-    name?: string;
-    /**
-     * プロジェクトの説明
-     * @type {string}
-     * @memberof UpdateProjectRequest
-     */
-    description?: string;
+    elapsedTime: string;
 }

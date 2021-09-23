@@ -13,31 +13,31 @@
 
 /**
  * @export
- * @interface UpdateLabelRequest
+ * @interface UpdateTaskRequest
  */
-export interface UpdateLabelRequest {
+export interface UpdateTaskRequest {
     /**
-     * ラベル名
+     * タスク名
      * @type {string}
-     * @memberof UpdateLabelRequest
+     * @memberof UpdateTaskRequest
      */
     name?: string;
     /**
-     * ラベルの説明
+     * タスクの説明
      * @type {string}
-     * @memberof UpdateLabelRequest
+     * @memberof UpdateTaskRequest
      */
     description?: string;
     /**
-     * ラベルの色(RGB形式)
+     * 見積もり時間
      * @type {string}
-     * @memberof UpdateLabelRequest
+     * @memberof UpdateTaskRequest
      */
-    color?: string;
+    estimatedTime?: string;
     /**
-     * プロジェクトのID
-     * @type {string}
-     * @memberof UpdateLabelRequest
+     * ラベル一覧
+     * @type {Array<string>}
+     * @memberof UpdateTaskRequest
      */
-    projectId?: string;
+    labelIds?: Array<string>;
 }

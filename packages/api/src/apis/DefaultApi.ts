@@ -16,10 +16,14 @@ import { BaseAPI, HttpHeaders, throwIfNullOrUndefined, encodeURI, OperationOpts,
 import {
     CreateLabelRequest,
     CreateProjectRequest,
+    CreateTaskRequest,
     LabelResponse,
     ProjectResponse,
+    SuspendTimerResponse,
+    TaskResponse,
     UpdateLabelRequest,
     UpdateProjectRequest,
+    UpdateTaskRequest,
 } from '../models';
 
 export interface LabelsLabelIdDeleteRequest {
@@ -50,6 +54,27 @@ export interface ProjectsProjectIdGetRequest {
 export interface ProjectsProjectIdPutRequest {
     projectId: string;
     updateProjectRequest?: UpdateProjectRequest;
+}
+
+export interface TasksPostRequest {
+    createTaskRequest?: CreateTaskRequest;
+}
+
+export interface TasksTaskIdDeleteRequest {
+    taskId: string;
+}
+
+export interface TasksTaskIdPutRequest {
+    taskId: string;
+    updateTaskRequest?: UpdateTaskRequest;
+}
+
+export interface TasksTaskIdStartTimerPostRequest {
+    taskId: string;
+}
+
+export interface TasksTaskIdSuspendTimerPostRequest {
+    taskId: string;
 }
 
 /**
@@ -174,6 +199,87 @@ export class DefaultApi extends BaseAPI {
             method: 'PUT',
             headers,
             body: updateProjectRequest,
+        }, opts?.responseOpts);
+    };
+
+    /**
+     * タスクの作成
+     */
+    tasksPost({ createTaskRequest }: TasksPostRequest): Observable<TaskResponse>
+    tasksPost({ createTaskRequest }: TasksPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
+    tasksPost({ createTaskRequest }: TasksPostRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
+
+        const headers: HttpHeaders = {
+            'Content-Type': 'application/json',
+        };
+
+        return this.request<TaskResponse>({
+            url: '/tasks/',
+            method: 'POST',
+            headers,
+            body: createTaskRequest,
+        }, opts?.responseOpts);
+    };
+
+    /**
+     * タスクの削除
+     */
+    tasksTaskIdDelete({ taskId }: TasksTaskIdDeleteRequest): Observable<void>
+    tasksTaskIdDelete({ taskId }: TasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    tasksTaskIdDelete({ taskId }: TasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdDelete');
+
+        return this.request<void>({
+            url: '/tasks/{taskId}'.replace('{taskId}', encodeURI(taskId)),
+            method: 'DELETE',
+        }, opts?.responseOpts);
+    };
+
+    /**
+     * タスクの更新
+     */
+    tasksTaskIdPut({ taskId, updateTaskRequest }: TasksTaskIdPutRequest): Observable<TaskResponse>
+    tasksTaskIdPut({ taskId, updateTaskRequest }: TasksTaskIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
+    tasksTaskIdPut({ taskId, updateTaskRequest }: TasksTaskIdPutRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
+        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdPut');
+
+        const headers: HttpHeaders = {
+            'Content-Type': 'application/json',
+        };
+
+        return this.request<TaskResponse>({
+            url: '/tasks/{taskId}'.replace('{taskId}', encodeURI(taskId)),
+            method: 'PUT',
+            headers,
+            body: updateTaskRequest,
+        }, opts?.responseOpts);
+    };
+
+    /**
+     * 計測時間の記録開始
+     */
+    tasksTaskIdStartTimerPost({ taskId }: TasksTaskIdStartTimerPostRequest): Observable<void>
+    tasksTaskIdStartTimerPost({ taskId }: TasksTaskIdStartTimerPostRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    tasksTaskIdStartTimerPost({ taskId }: TasksTaskIdStartTimerPostRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdStartTimerPost');
+
+        return this.request<void>({
+            url: '/tasks/{taskId}/start_timer'.replace('{taskId}', encodeURI(taskId)),
+            method: 'POST',
+        }, opts?.responseOpts);
+    };
+
+    /**
+     * 計測時間の記録を一時停止
+     */
+    tasksTaskIdSuspendTimerPost({ taskId }: TasksTaskIdSuspendTimerPostRequest): Observable<SuspendTimerResponse>
+    tasksTaskIdSuspendTimerPost({ taskId }: TasksTaskIdSuspendTimerPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<SuspendTimerResponse>>
+    tasksTaskIdSuspendTimerPost({ taskId }: TasksTaskIdSuspendTimerPostRequest, opts?: OperationOpts): Observable<SuspendTimerResponse | RawAjaxResponse<SuspendTimerResponse>> {
+        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdSuspendTimerPost');
+
+        return this.request<SuspendTimerResponse>({
+            url: '/tasks/{taskId}/suspend_timer'.replace('{taskId}', encodeURI(taskId)),
+            method: 'POST',
         }, opts?.responseOpts);
     };
 
