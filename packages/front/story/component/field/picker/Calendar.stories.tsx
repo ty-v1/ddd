@@ -1,16 +1,16 @@
 import React from 'react';
 import Calendar from '@/component/field/picker/Calendar';
-import DatePicker from '@/component/field/picker/DatePicker';
+import { Meta, Story } from '@storybook/react';
 
 Calendar.displayName = 'Calendar';
 
 export default {
   component: Calendar,
   title: 'Calendar',
-};
+} as Meta;
 
-type Props = React.ComponentProps<typeof DatePicker>;
+type Props = React.ComponentProps<typeof Calendar>;
 
-const Template = (args: Props) => <Calendar {...args} />;
+const Template: Story<Props> = (args) => <Calendar {...args} />;
 
 export const Default = Template.bind({});
