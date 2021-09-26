@@ -1,12 +1,13 @@
 import React from 'react';
 import Label from '@/component/label/Label';
+import { Meta } from '@storybook/react';
 
 Label.displayName = 'Label';
 
 export default {
   component: Label,
   title: 'Label',
-};
+} as Meta;
 
 const Template = () => (
   <div>
