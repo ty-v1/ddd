@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 import Button from '@/component/field/button/Button';
 
-Button.displayName = 'Label';
+Button.displayName = 'Button';
 
 export default {
   component: Button,
