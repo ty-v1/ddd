@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "jsx": "react",
     "target": "es6",
     "module": "es6",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "strict": true
   },
   "exclude": [
     "node_modules"
