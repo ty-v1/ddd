@@ -21,7 +21,6 @@ export const CardList: <T, >(props: Props<T>) => ReactElement<Props<T>> = <T, >(
 
     add(group);
     event.stopPropagation();
-
   };
 
   const cards = items.map((e, i) => {
