@@ -24,7 +24,6 @@ export const CardList: <T, >(props: Props<T>) => ReactElement<Props<T>> = <T, >(
 
   };
 
-  // TODO 追加ロジック
   const cards = items.map((e, i) => {
     const [content, key] = cardFactory(e, i);
     return (
