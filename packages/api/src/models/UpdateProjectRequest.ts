@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,7 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface UpdateProjectRequest
  */
@@ -29,3 +32,34 @@ export interface UpdateProjectRequest {
      */
     description?: string;
 }
+
+export function UpdateProjectRequestFromJSON(json: any): UpdateProjectRequest {
+    return UpdateProjectRequestFromJSONTyped(json, false);
+}
+
+export function UpdateProjectRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateProjectRequest {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+    };
+}
+
+export function UpdateProjectRequestToJSON(value?: UpdateProjectRequest | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'name': value.name,
+        'description': value.description,
+    };
+}
+
+

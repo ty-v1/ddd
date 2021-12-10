@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,7 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface SuspendTimerResponse
  */
@@ -23,3 +26,32 @@ export interface SuspendTimerResponse {
      */
     elapsedTime: string;
 }
+
+export function SuspendTimerResponseFromJSON(json: any): SuspendTimerResponse {
+    return SuspendTimerResponseFromJSONTyped(json, false);
+}
+
+export function SuspendTimerResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuspendTimerResponse {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'elapsedTime': json['elapsedTime'],
+    };
+}
+
+export function SuspendTimerResponseToJSON(value?: SuspendTimerResponse | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'elapsedTime': value.elapsedTime,
+    };
+}
+
+

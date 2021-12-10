@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,7 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface CreateLabelRequest
  */
@@ -35,3 +38,36 @@ export interface CreateLabelRequest {
      */
     projectId: string;
 }
+
+export function CreateLabelRequestFromJSON(json: any): CreateLabelRequest {
+    return CreateLabelRequestFromJSONTyped(json, false);
+}
+
+export function CreateLabelRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateLabelRequest {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'name': json['name'],
+        'description': json['description'],
+        'projectId': json['projectId'],
+    };
+}
+
+export function CreateLabelRequestToJSON(value?: CreateLabelRequest | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'name': value.name,
+        'description': value.description,
+        'projectId': value.projectId,
+    };
+}
+
+

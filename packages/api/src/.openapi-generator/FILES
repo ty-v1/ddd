@@ -1,4 +1,3 @@
-.gitignore
 .openapi-generator-ignore
 apis/DefaultApi.ts
 apis/index.ts
@@ -15,5 +14,3 @@ models/UpdateProjectRequest.ts
 models/UpdateTaskRequest.ts
 models/index.ts
 runtime.ts
-servers.ts
-tsconfig.json

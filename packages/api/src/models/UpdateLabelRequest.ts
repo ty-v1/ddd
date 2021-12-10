@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,7 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface UpdateLabelRequest
  */
@@ -41,3 +44,38 @@ export interface UpdateLabelRequest {
      */
     projectId?: string;
 }
+
+export function UpdateLabelRequestFromJSON(json: any): UpdateLabelRequest {
+    return UpdateLabelRequestFromJSONTyped(json, false);
+}
+
+export function UpdateLabelRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateLabelRequest {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'color': !exists(json, 'color') ? undefined : json['color'],
+        'projectId': !exists(json, 'projectId') ? undefined : json['projectId'],
+    };
+}
+
+export function UpdateLabelRequestToJSON(value?: UpdateLabelRequest | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'name': value.name,
+        'description': value.description,
+        'color': value.color,
+        'projectId': value.projectId,
+    };
+}
+
+

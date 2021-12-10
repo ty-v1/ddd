@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,7 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface CreateTaskRequest
  */
@@ -47,3 +50,40 @@ export interface CreateTaskRequest {
      */
     labelIds: Array<string>;
 }
+
+export function CreateTaskRequestFromJSON(json: any): CreateTaskRequest {
+    return CreateTaskRequestFromJSONTyped(json, false);
+}
+
+export function CreateTaskRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTaskRequest {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'name': json['name'],
+        'description': json['description'],
+        'estimatedTime': json['estimatedTime'],
+        'projectId': json['projectId'],
+        'labelIds': json['labelIds'],
+    };
+}
+
+export function CreateTaskRequestToJSON(value?: CreateTaskRequest | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'name': value.name,
+        'description': value.description,
+        'estimatedTime': value.estimatedTime,
+        'projectId': value.projectId,
+        'labelIds': value.labelIds,
+    };
+}
+
+
