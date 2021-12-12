@@ -8,7 +8,7 @@ export const PageTemplate: React.FC = ({ children }) => {
           {/*TODO パンくず*/}
         </nav>
         <div>
-          {{ children }}
+          {children}
         </div>
       </main>
     </div>
