@@ -8,7 +8,8 @@ export class ProjectEntity {
     private _description: string,
     readonly createDateTime: LocalDateTime,
     readonly updateDateTime: LocalDateTime,
-  ) {}
+  ) {
+  }
 
   get name(): string {
     return this._name;
@@ -18,11 +19,8 @@ export class ProjectEntity {
     return this._description;
   }
 
-  rename(name: string): void {
-    this._name = name;
-  }
-
-  changeDescription(description: string): void {
-    this._description = description;
+  update(props: { readonly name?: string, readonly description?: string }): void {
+    this._name = props.name ?? this._name;
+    this._description = props.description ?? this._description;
   }
 }

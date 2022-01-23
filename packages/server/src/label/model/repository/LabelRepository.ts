@@ -2,7 +2,6 @@ import { Observable } from 'rxjs';
 import { LabelEntity } from '@/label/model/entity/LabelEntity';
 import { LabelId } from '@/label/model/entity/LabelId';
 import { ProjectId } from '@/project/model/entity/ProjectId';
-import { Color } from '@/label/model/entity/Color';
 
 export interface LabelRepository {
   findById(id: LabelId): Observable<LabelEntity | undefined>;
@@ -15,7 +14,11 @@ export interface LabelRepository {
 
   delete(id: LabelId): Observable<void>;
 
-  existsSameLabel(projectId: ProjectId, color: Color, name: string): Observable<boolean>;
+  existsSameLabel(props: {
+    readonly id?: LabelId,
+    readonly projectId: ProjectId,
+    readonly name: string
+  }): Observable<boolean>;
 }
 
 export const LABEL_REPOSITORY = 'label-repository';

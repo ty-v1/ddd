@@ -34,10 +34,4 @@ export interface UpdateLabelRequest {
      * @memberof UpdateLabelRequest
      */
     color?: string;
-    /**
-     * プロジェクトのID
-     * @type {string}
-     * @memberof UpdateLabelRequest
-     */
-    projectId?: string;
 }

@@ -4,7 +4,6 @@ import { map, Observable } from 'rxjs';
 import { ProjectDto } from '@/project/usecase/ProjectDto';
 import { UpdateProjectUseCase } from '@/project/usecase/UpdateProjectUseCase';
 import { DeleteProjectUseCase } from '@/project/usecase/DeleteProjectUseCase';
-import { ProjectId } from '@/project/model/entity/ProjectId';
 import { GetProjectUseCase } from '@/project/usecase/GetProjectUseCase';
 import { CreateProjectRequest, ProjectResponse, UpdateProjectRequest } from 'api';
 
@@ -15,32 +14,36 @@ export class ProjectController {
     readonly createProjectUseCase: CreateProjectUseCase,
     readonly updateProjectUseCase: UpdateProjectUseCase,
     readonly deleteProjectUseCase: DeleteProjectUseCase,
-  ) {}
+  ) {
+  }
 
   @Post()
   create(@Body() request: CreateProjectRequest): Observable<ProjectResponse> {
-    return this.createProjectUseCase.exec(request).pipe(map((e) => createResponse(e)));
+    return this.createProjectUseCase.exec(request)
+      .pipe(map((e) => createResponse(e)));
   }
 
   @Get(':id')
   get(@Param('id') id: string): Observable<ProjectResponse> {
-    return this.getProjectUseCase.exec({ id: ProjectId.from(id) }).pipe(map((e) => createResponse(e)));
+    return this.getProjectUseCase.exec({ id })
+      .pipe(map((e) => createResponse(e)));
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() request: UpdateProjectRequest): Observable<ProjectResponse> {
     const props = {
       ...request,
-      id: ProjectId.from(id),
+      id,
     };
 
-    return this.updateProjectUseCase.exec(props).pipe(map((e) => createResponse(e)));
+    return this.updateProjectUseCase.exec(props)
+      .pipe(map((e) => createResponse(e)));
   }
 
   @Delete(':id')
   @HttpCode(204)
   delete(@Param('id') id: string): Observable<void> {
-    return this.deleteProjectUseCase.exec({ id: ProjectId.from(id) });
+    return this.deleteProjectUseCase.exec({ id });
   }
 }
 

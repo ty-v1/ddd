@@ -35,12 +35,6 @@ export interface CreateTaskRequest {
      */
     estimatedTime: string;
     /**
-     * プロジェクトのID
-     * @type {string}
-     * @memberof CreateTaskRequest
-     */
-    projectId: string;
-    /**
      * ラベル一覧
      * @type {Array<string>}
      * @memberof CreateTaskRequest

@@ -19,25 +19,11 @@ import {
     CreateTaskRequest,
     LabelResponse,
     ProjectResponse,
-    SuspendTimerResponse,
     TaskResponse,
     UpdateLabelRequest,
     UpdateProjectRequest,
     UpdateTaskRequest,
 } from '../models';
-
-export interface LabelsLabelIdDeleteRequest {
-    labelId: string;
-}
-
-export interface LabelsLabelIdPutRequest {
-    labelId: string;
-    updateLabelRequest?: UpdateLabelRequest;
-}
-
-export interface LabelsPostRequest {
-    createLabelRequest?: CreateLabelRequest;
-}
 
 export interface ProjectsPostRequest {
     createProjectRequest?: CreateProjectRequest;
@@ -51,89 +37,47 @@ export interface ProjectsProjectIdGetRequest {
     projectId: string;
 }
 
+export interface ProjectsProjectIdLabelsLabelIdDeleteRequest {
+    projectId: string;
+    labelId: string;
+}
+
+export interface ProjectsProjectIdLabelsLabelIdPutRequest {
+    projectId: string;
+    labelId: string;
+    updateLabelRequest?: UpdateLabelRequest;
+}
+
+export interface ProjectsProjectIdLabelsPostRequest {
+    projectId: string;
+    createLabelRequest?: CreateLabelRequest;
+}
+
 export interface ProjectsProjectIdPutRequest {
     projectId: string;
     updateProjectRequest?: UpdateProjectRequest;
 }
 
-export interface TasksPostRequest {
+export interface ProjectsProjectIdTasksPostRequest {
+    projectId: string;
     createTaskRequest?: CreateTaskRequest;
 }
 
-export interface TasksTaskIdDeleteRequest {
+export interface ProjectsProjectIdTasksTaskIdDeleteRequest {
+    projectId: string;
     taskId: string;
 }
 
-export interface TasksTaskIdPutRequest {
+export interface ProjectsProjectIdTasksTaskIdPutRequest {
+    projectId: string;
     taskId: string;
     updateTaskRequest?: UpdateTaskRequest;
-}
-
-export interface TasksTaskIdStartTimerPostRequest {
-    taskId: string;
-}
-
-export interface TasksTaskIdSuspendTimerPostRequest {
-    taskId: string;
 }
 
 /**
  * no description
  */
 export class DefaultApi extends BaseAPI {
-
-    /**
-     * ラベルの削除
-     */
-    labelsLabelIdDelete({ labelId }: LabelsLabelIdDeleteRequest): Observable<void>
-    labelsLabelIdDelete({ labelId }: LabelsLabelIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    labelsLabelIdDelete({ labelId }: LabelsLabelIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(labelId, 'labelId', 'labelsLabelIdDelete');
-
-        return this.request<void>({
-            url: '/labels/{labelId}'.replace('{labelId}', encodeURI(labelId)),
-            method: 'DELETE',
-        }, opts?.responseOpts);
-    };
-
-    /**
-     * ラベルの更新
-     */
-    labelsLabelIdPut({ labelId, updateLabelRequest }: LabelsLabelIdPutRequest): Observable<LabelResponse>
-    labelsLabelIdPut({ labelId, updateLabelRequest }: LabelsLabelIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<LabelResponse>>
-    labelsLabelIdPut({ labelId, updateLabelRequest }: LabelsLabelIdPutRequest, opts?: OperationOpts): Observable<LabelResponse | RawAjaxResponse<LabelResponse>> {
-        throwIfNullOrUndefined(labelId, 'labelId', 'labelsLabelIdPut');
-
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
-
-        return this.request<LabelResponse>({
-            url: '/labels/{labelId}'.replace('{labelId}', encodeURI(labelId)),
-            method: 'PUT',
-            headers,
-            body: updateLabelRequest,
-        }, opts?.responseOpts);
-    };
-
-    /**
-     * ラベルの作成
-     */
-    labelsPost({ createLabelRequest }: LabelsPostRequest): Observable<LabelResponse>
-    labelsPost({ createLabelRequest }: LabelsPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<LabelResponse>>
-    labelsPost({ createLabelRequest }: LabelsPostRequest, opts?: OperationOpts): Observable<LabelResponse | RawAjaxResponse<LabelResponse>> {
-
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
-
-        return this.request<LabelResponse>({
-            url: '/labels/',
-            method: 'POST',
-            headers,
-            body: createLabelRequest,
-        }, opts?.responseOpts);
-    };
 
     /**
      * プロジェクトの作成
@@ -183,6 +127,62 @@ export class DefaultApi extends BaseAPI {
     };
 
     /**
+     * ラベルの削除
+     */
+    projectsProjectIdLabelsLabelIdDelete({ projectId, labelId }: ProjectsProjectIdLabelsLabelIdDeleteRequest): Observable<void>
+    projectsProjectIdLabelsLabelIdDelete({ projectId, labelId }: ProjectsProjectIdLabelsLabelIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    projectsProjectIdLabelsLabelIdDelete({ projectId, labelId }: ProjectsProjectIdLabelsLabelIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdLabelsLabelIdDelete');
+        throwIfNullOrUndefined(labelId, 'labelId', 'projectsProjectIdLabelsLabelIdDelete');
+
+        return this.request<void>({
+            url: '/projects/{projectId}/labels/{labelId}'.replace('{projectId}', encodeURI(projectId)).replace('{labelId}', encodeURI(labelId)),
+            method: 'DELETE',
+        }, opts?.responseOpts);
+    };
+
+    /**
+     * ラベルの更新
+     */
+    projectsProjectIdLabelsLabelIdPut({ projectId, labelId, updateLabelRequest }: ProjectsProjectIdLabelsLabelIdPutRequest): Observable<LabelResponse>
+    projectsProjectIdLabelsLabelIdPut({ projectId, labelId, updateLabelRequest }: ProjectsProjectIdLabelsLabelIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<LabelResponse>>
+    projectsProjectIdLabelsLabelIdPut({ projectId, labelId, updateLabelRequest }: ProjectsProjectIdLabelsLabelIdPutRequest, opts?: OperationOpts): Observable<LabelResponse | RawAjaxResponse<LabelResponse>> {
+        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdLabelsLabelIdPut');
+        throwIfNullOrUndefined(labelId, 'labelId', 'projectsProjectIdLabelsLabelIdPut');
+
+        const headers: HttpHeaders = {
+            'Content-Type': 'application/json',
+        };
+
+        return this.request<LabelResponse>({
+            url: '/projects/{projectId}/labels/{labelId}'.replace('{projectId}', encodeURI(projectId)).replace('{labelId}', encodeURI(labelId)),
+            method: 'PUT',
+            headers,
+            body: updateLabelRequest,
+        }, opts?.responseOpts);
+    };
+
+    /**
+     * ラベルの作成
+     */
+    projectsProjectIdLabelsPost({ projectId, createLabelRequest }: ProjectsProjectIdLabelsPostRequest): Observable<LabelResponse>
+    projectsProjectIdLabelsPost({ projectId, createLabelRequest }: ProjectsProjectIdLabelsPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<LabelResponse>>
+    projectsProjectIdLabelsPost({ projectId, createLabelRequest }: ProjectsProjectIdLabelsPostRequest, opts?: OperationOpts): Observable<LabelResponse | RawAjaxResponse<LabelResponse>> {
+        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdLabelsPost');
+
+        const headers: HttpHeaders = {
+            'Content-Type': 'application/json',
+        };
+
+        return this.request<LabelResponse>({
+            url: '/projects/{projectId}/labels/'.replace('{projectId}', encodeURI(projectId)),
+            method: 'POST',
+            headers,
+            body: createLabelRequest,
+        }, opts?.responseOpts);
+    };
+
+    /**
      * プロジェクトの更新
      */
     projectsProjectIdPut({ projectId, updateProjectRequest }: ProjectsProjectIdPutRequest): Observable<ProjectResponse>
@@ -205,16 +205,17 @@ export class DefaultApi extends BaseAPI {
     /**
      * タスクの作成
      */
-    tasksPost({ createTaskRequest }: TasksPostRequest): Observable<TaskResponse>
-    tasksPost({ createTaskRequest }: TasksPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
-    tasksPost({ createTaskRequest }: TasksPostRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
+    projectsProjectIdTasksPost({ projectId, createTaskRequest }: ProjectsProjectIdTasksPostRequest): Observable<TaskResponse>
+    projectsProjectIdTasksPost({ projectId, createTaskRequest }: ProjectsProjectIdTasksPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
+    projectsProjectIdTasksPost({ projectId, createTaskRequest }: ProjectsProjectIdTasksPostRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
+        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdTasksPost');
 
         const headers: HttpHeaders = {
             'Content-Type': 'application/json',
         };
 
         return this.request<TaskResponse>({
-            url: '/tasks/',
+            url: '/projects/{projectId}/tasks/'.replace('{projectId}', encodeURI(projectId)),
             method: 'POST',
             headers,
             body: createTaskRequest,
@@ -224,13 +225,14 @@ export class DefaultApi extends BaseAPI {
     /**
      * タスクの削除
      */
-    tasksTaskIdDelete({ taskId }: TasksTaskIdDeleteRequest): Observable<void>
-    tasksTaskIdDelete({ taskId }: TasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    tasksTaskIdDelete({ taskId }: TasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdDelete');
+    projectsProjectIdTasksTaskIdDelete({ projectId, taskId }: ProjectsProjectIdTasksTaskIdDeleteRequest): Observable<void>
+    projectsProjectIdTasksTaskIdDelete({ projectId, taskId }: ProjectsProjectIdTasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    projectsProjectIdTasksTaskIdDelete({ projectId, taskId }: ProjectsProjectIdTasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdTasksTaskIdDelete');
+        throwIfNullOrUndefined(taskId, 'taskId', 'projectsProjectIdTasksTaskIdDelete');
 
         return this.request<void>({
-            url: '/tasks/{taskId}'.replace('{taskId}', encodeURI(taskId)),
+            url: '/projects/{projectId}/tasks/{taskId}'.replace('{projectId}', encodeURI(projectId)).replace('{taskId}', encodeURI(taskId)),
             method: 'DELETE',
         }, opts?.responseOpts);
     };
@@ -238,48 +240,21 @@ export class DefaultApi extends BaseAPI {
     /**
      * タスクの更新
      */
-    tasksTaskIdPut({ taskId, updateTaskRequest }: TasksTaskIdPutRequest): Observable<TaskResponse>
-    tasksTaskIdPut({ taskId, updateTaskRequest }: TasksTaskIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
-    tasksTaskIdPut({ taskId, updateTaskRequest }: TasksTaskIdPutRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
-        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdPut');
+    projectsProjectIdTasksTaskIdPut({ projectId, taskId, updateTaskRequest }: ProjectsProjectIdTasksTaskIdPutRequest): Observable<TaskResponse>
+    projectsProjectIdTasksTaskIdPut({ projectId, taskId, updateTaskRequest }: ProjectsProjectIdTasksTaskIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
+    projectsProjectIdTasksTaskIdPut({ projectId, taskId, updateTaskRequest }: ProjectsProjectIdTasksTaskIdPutRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
+        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdTasksTaskIdPut');
+        throwIfNullOrUndefined(taskId, 'taskId', 'projectsProjectIdTasksTaskIdPut');
 
         const headers: HttpHeaders = {
             'Content-Type': 'application/json',
         };
 
         return this.request<TaskResponse>({
-            url: '/tasks/{taskId}'.replace('{taskId}', encodeURI(taskId)),
+            url: '/projects/{projectId}/tasks/{taskId}'.replace('{projectId}', encodeURI(projectId)).replace('{taskId}', encodeURI(taskId)),
             method: 'PUT',
             headers,
             body: updateTaskRequest,
-        }, opts?.responseOpts);
-    };
-
-    /**
-     * 計測時間の記録開始
-     */
-    tasksTaskIdStartTimerPost({ taskId }: TasksTaskIdStartTimerPostRequest): Observable<void>
-    tasksTaskIdStartTimerPost({ taskId }: TasksTaskIdStartTimerPostRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    tasksTaskIdStartTimerPost({ taskId }: TasksTaskIdStartTimerPostRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdStartTimerPost');
-
-        return this.request<void>({
-            url: '/tasks/{taskId}/start_timer'.replace('{taskId}', encodeURI(taskId)),
-            method: 'POST',
-        }, opts?.responseOpts);
-    };
-
-    /**
-     * 計測時間の記録を一時停止
-     */
-    tasksTaskIdSuspendTimerPost({ taskId }: TasksTaskIdSuspendTimerPostRequest): Observable<SuspendTimerResponse>
-    tasksTaskIdSuspendTimerPost({ taskId }: TasksTaskIdSuspendTimerPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<SuspendTimerResponse>>
-    tasksTaskIdSuspendTimerPost({ taskId }: TasksTaskIdSuspendTimerPostRequest, opts?: OperationOpts): Observable<SuspendTimerResponse | RawAjaxResponse<SuspendTimerResponse>> {
-        throwIfNullOrUndefined(taskId, 'taskId', 'tasksTaskIdSuspendTimerPost');
-
-        return this.request<SuspendTimerResponse>({
-            url: '/tasks/{taskId}/suspend_timer'.replace('{taskId}', encodeURI(taskId)),
-            method: 'POST',
         }, opts?.responseOpts);
     };
 

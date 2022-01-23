@@ -9,23 +9,25 @@ export class DeleteProjectUseCase {
   constructor(
     @Inject(PROJECT_REPOSITORY)
     private readonly projectRepository: ProjectRepository,
-  ) {}
+  ) {
+  }
 
   exec(props: DeleteProjectProps): Observable<void> {
     // TODO カンバンおよびTaskの削除
-    return this.projectRepository.findById(props.id).pipe(
-      mergeMap((e) => {
-        if (isNil(e)) {
-          // TODO
-          throw new Error('');
-        }
+    return this.projectRepository.findById(ProjectId.from(props.id))
+      .pipe(
+        mergeMap((e) => {
+          if (isNil(e)) {
+            // TODO
+            throw new Error('');
+          }
 
-        return this.projectRepository.delete(e.id);
-      }),
-    );
+          return this.projectRepository.delete(e.id);
+        }),
+      );
   }
 }
 
 type DeleteProjectProps = {
-  readonly id: ProjectId;
+  readonly id: string;
 };

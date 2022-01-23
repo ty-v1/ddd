@@ -1,19 +1,16 @@
-import { Label } from '@prisma/client';
-import { LocalDateTime, nativeJs } from '@js-joda/core';
 import { LabelEntity } from '@/label/model/entity/LabelEntity';
 import { LabelId } from '@/label/model/entity/LabelId';
 import { Color } from '@/label/model/entity/Color';
 import { ProjectId } from '@/project/model/entity/ProjectId';
+import { LabelRecord } from '@/repository/record/LabelRecord';
 
-export const restoreLabelEntity: (dao: Label) => LabelEntity = (dao) => {
+export const restoreLabelEntity: (record: LabelRecord) => LabelEntity = (record) => {
   return new LabelEntity(
-    LabelId.from(dao.id),
-    dao.name,
-    dao.description,
-    Color.from(dao.color),
-    ProjectId.from(dao.project_id),
-    LocalDateTime.from(nativeJs(dao.created_at)),
-    LocalDateTime.from(nativeJs(dao.created_at)),
+    LabelId.from(record.id),
+    record.name,
+    record.description,
+    Color.from(record.color),
+    ProjectId.from(record.projectId),
   );
 };
 
@@ -25,7 +22,6 @@ type CreateLabelProps = {
 };
 
 export const createLabelEntity: (props: CreateLabelProps) => LabelEntity = (props) => {
-  const now = LocalDateTime.now();
   const color = Color.from(props.color);
 
   return new LabelEntity(
@@ -34,7 +30,5 @@ export const createLabelEntity: (props: CreateLabelProps) => LabelEntity = (prop
     props.description,
     color,
     ProjectId.from(props.projectId),
-    now,
-    now,
   );
 };
