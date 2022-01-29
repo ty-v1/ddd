@@ -18,7 +18,8 @@ export class CreateLabelUseCase {
     private readonly detectLabelDuplicationDomainService: DetectLabelDuplicationDomainService,
     @Inject(DETECT_PROJECT_EXISTENCE_DOMAIN_SERVICE)
     private readonly detectProjectExistenceDomainService: DetectProjectExistenceDomainService,
-  ) {}
+  ) {
+  }
 
   exec(props: CreateLabelProps): Observable<LabelDto> {
     // TODO バリデーション
@@ -60,8 +61,6 @@ export class CreateLabelUseCase {
             name: e.name,
             color: e.color,
             description: e.description,
-            createDateTime: e.createDateTime,
-            updateDateTime: e.updateDateTime,
           })),
         );
       }),

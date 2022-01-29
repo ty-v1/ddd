@@ -36,14 +36,4 @@ export interface LabelResponse {
      * @memberof LabelResponse
      */
     color: string;
-    /**
-     * @type {string}
-     * @memberof LabelResponse
-     */
-    createDateTime: string;
-    /**
-     * @type {string}
-     * @memberof LabelResponse
-     */
-    updateDateTime: string;
 }
