@@ -43,6 +43,12 @@ export interface UpdateTaskRequest {
      * @memberof UpdateTaskRequest
      */
     labelIds?: Array<string>;
+    /**
+     * 経過時間
+     * @type {string}
+     * @memberof UpdateTaskRequest
+     */
+    elapstedTime?: string;
 }
 
 export function UpdateTaskRequestFromJSON(json: any): UpdateTaskRequest {
@@ -59,6 +65,7 @@ export function UpdateTaskRequestFromJSONTyped(json: any, ignoreDiscriminator: b
         'description': !exists(json, 'description') ? undefined : json['description'],
         'estimatedTime': !exists(json, 'estimatedTime') ? undefined : json['estimatedTime'],
         'labelIds': !exists(json, 'labelIds') ? undefined : json['labelIds'],
+        'elapstedTime': !exists(json, 'elapstedTime') ? undefined : json['elapstedTime'],
     };
 }
 
@@ -75,6 +82,7 @@ export function UpdateTaskRequestToJSON(value?: UpdateTaskRequest | null): any {
         'description': value.description,
         'estimatedTime': value.estimatedTime,
         'labelIds': value.labelIds,
+        'elapstedTime': value.elapstedTime,
     };
 }
 

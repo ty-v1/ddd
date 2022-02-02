@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,29 +12,70 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface LabelResponse
  */
 export interface LabelResponse {
     /**
+     * 
      * @type {string}
      * @memberof LabelResponse
      */
     id: string;
     /**
+     * 
      * @type {string}
      * @memberof LabelResponse
      */
     name: string;
     /**
+     * 
      * @type {string}
      * @memberof LabelResponse
      */
     description: string;
     /**
+     * 
      * @type {string}
      * @memberof LabelResponse
      */
     color: string;
 }
+
+export function LabelResponseFromJSON(json: any): LabelResponse {
+    return LabelResponseFromJSONTyped(json, false);
+}
+
+export function LabelResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): LabelResponse {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'id': json['id'],
+        'name': json['name'],
+        'description': json['description'],
+        'color': json['color'],
+    };
+}
+
+export function LabelResponseToJSON(value?: LabelResponse | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'id': value.id,
+        'name': value.name,
+        'description': value.description,
+        'color': value.color,
+    };
+}
+
+

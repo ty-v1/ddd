@@ -16,32 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface SuspendTimerResponse
+ * @interface ColumnResponse
  */
-export interface SuspendTimerResponse {
+export interface ColumnResponse {
     /**
-     * 計測時間
+     * カラムID
      * @type {string}
-     * @memberof SuspendTimerResponse
+     * @memberof ColumnResponse
      */
-    elapsedTime: string;
+    id: string;
+    /**
+     * カラム名
+     * @type {string}
+     * @memberof ColumnResponse
+     */
+    name: string;
 }
 
-export function SuspendTimerResponseFromJSON(json: any): SuspendTimerResponse {
-    return SuspendTimerResponseFromJSONTyped(json, false);
+export function ColumnResponseFromJSON(json: any): ColumnResponse {
+    return ColumnResponseFromJSONTyped(json, false);
 }
 
-export function SuspendTimerResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuspendTimerResponse {
+export function ColumnResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ColumnResponse {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'elapsedTime': json['elapsedTime'],
+        'id': json['id'],
+        'name': json['name'],
     };
 }
 
-export function SuspendTimerResponseToJSON(value?: SuspendTimerResponse | null): any {
+export function ColumnResponseToJSON(value?: ColumnResponse | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -50,7 +57,8 @@ export function SuspendTimerResponseToJSON(value?: SuspendTimerResponse | null):
     }
     return {
         
-        'elapsedTime': value.elapsedTime,
+        'id': value.id,
+        'name': value.name,
     };
 }
 

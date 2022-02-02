@@ -52,7 +52,6 @@ export function UpdateLabelRequestFromJSONTyped(json: any, ignoreDiscriminator: 
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'color': !exists(json, 'color') ? undefined : json['color'],
-        'projectId': !exists(json, 'projectId') ? undefined : json['projectId'],
     };
 }
 
@@ -68,7 +67,6 @@ export function UpdateLabelRequestToJSON(value?: UpdateLabelRequest | null): any
         'name': value.name,
         'description': value.description,
         'color': value.color,
-        'projectId': value.projectId,
     };
 }
 

@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,19 +12,74 @@
  * Do not edit the class manually.
  */
 
-import { Observable } from 'rxjs';
-import { BaseAPI, HttpHeaders, throwIfNullOrUndefined, encodeURI, OperationOpts, RawAjaxResponse } from '../runtime';
+
+import * as runtime from '../runtime';
 import {
+    ColumnResponse,
+    ColumnResponseFromJSON,
+    ColumnResponseToJSON,
+    CreateColumnRequest,
+    CreateColumnRequestFromJSON,
+    CreateColumnRequestToJSON,
     CreateLabelRequest,
+    CreateLabelRequestFromJSON,
+    CreateLabelRequestToJSON,
     CreateProjectRequest,
+    CreateProjectRequestFromJSON,
+    CreateProjectRequestToJSON,
     CreateTaskRequest,
+    CreateTaskRequestFromJSON,
+    CreateTaskRequestToJSON,
     LabelResponse,
+    LabelResponseFromJSON,
+    LabelResponseToJSON,
+    MoveTaskRequest,
+    MoveTaskRequestFromJSON,
+    MoveTaskRequestToJSON,
     ProjectResponse,
+    ProjectResponseFromJSON,
+    ProjectResponseToJSON,
     TaskResponse,
+    TaskResponseFromJSON,
+    TaskResponseToJSON,
+    UpdateColumnRequest,
+    UpdateColumnRequestFromJSON,
+    UpdateColumnRequestToJSON,
     UpdateLabelRequest,
+    UpdateLabelRequestFromJSON,
+    UpdateLabelRequestToJSON,
     UpdateProjectRequest,
+    UpdateProjectRequestFromJSON,
+    UpdateProjectRequestToJSON,
     UpdateTaskRequest,
+    UpdateTaskRequestFromJSON,
+    UpdateTaskRequestToJSON,
 } from '../models';
+
+export interface DeleteProjectsProjectIdColumnsColumnIdRequest {
+    projectId: string;
+    columnId: string;
+}
+
+export interface GetProjectsProjectIdColumnsRequest {
+    projectId: string;
+}
+
+export interface GetProjectsProjectIdColumnsColumnIdRequest {
+    projectId: string;
+    columnId: string;
+}
+
+export interface PostProjectsProjectIdColumnsRequest {
+    projectId: string;
+    createColumnRequest?: CreateColumnRequest;
+}
+
+export interface PostProjectsProjectIdTasksTaskIdMoveRequest {
+    projectId: string;
+    taskId: string;
+    moveTaskRequest?: MoveTaskRequest;
+}
 
 export interface ProjectsPostRequest {
     createProjectRequest?: CreateProjectRequest;
@@ -74,188 +130,544 @@ export interface ProjectsProjectIdTasksTaskIdPutRequest {
     updateTaskRequest?: UpdateTaskRequest;
 }
 
+export interface PutProjectsProjectIdColumnsColumnIdRequest {
+    projectId: string;
+    columnId: string;
+    updateColumnRequest?: UpdateColumnRequest;
+}
+
 /**
- * no description
+ * 
  */
-export class DefaultApi extends BaseAPI {
+export class DefaultApi extends runtime.BaseAPI {
+
+    /**
+     * カラム削除
+     */
+    async deleteProjectsProjectIdColumnsColumnIdRaw(requestParameters: DeleteProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling deleteProjectsProjectIdColumnsColumnId.');
+        }
+
+        if (requestParameters.columnId === null || requestParameters.columnId === undefined) {
+            throw new runtime.RequiredError('columnId','Required parameter requestParameters.columnId was null or undefined when calling deleteProjectsProjectIdColumnsColumnId.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}/columns/{columnId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"columnId"}}`, encodeURIComponent(String(requestParameters.columnId))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * カラム削除
+     */
+    async deleteProjectsProjectIdColumnsColumnId(requestParameters: DeleteProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.deleteProjectsProjectIdColumnsColumnIdRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * カラム取得
+     */
+    async getProjectsProjectIdColumnsRaw(requestParameters: GetProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getProjectsProjectIdColumns.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}/columns`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * カラム取得
+     */
+    async getProjectsProjectIdColumns(requestParameters: GetProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.getProjectsProjectIdColumnsRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * カラム
+     */
+    async getProjectsProjectIdColumnsColumnIdRaw(requestParameters: GetProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ColumnResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getProjectsProjectIdColumnsColumnId.');
+        }
+
+        if (requestParameters.columnId === null || requestParameters.columnId === undefined) {
+            throw new runtime.RequiredError('columnId','Required parameter requestParameters.columnId was null or undefined when calling getProjectsProjectIdColumnsColumnId.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}/columns/{columnId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"columnId"}}`, encodeURIComponent(String(requestParameters.columnId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ColumnResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * カラム
+     */
+    async getProjectsProjectIdColumnsColumnId(requestParameters: GetProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<ColumnResponse> {
+        const response = await this.getProjectsProjectIdColumnsColumnIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * カラム追加
+     */
+    async postProjectsProjectIdColumnsRaw(requestParameters: PostProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ColumnResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling postProjectsProjectIdColumns.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/columns`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateColumnRequestToJSON(requestParameters.createColumnRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ColumnResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * カラム追加
+     */
+    async postProjectsProjectIdColumns(requestParameters: PostProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<ColumnResponse> {
+        const response = await this.postProjectsProjectIdColumnsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * カードの移動
+     */
+    async postProjectsProjectIdTasksTaskIdMoveRaw(requestParameters: PostProjectsProjectIdTasksTaskIdMoveRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling postProjectsProjectIdTasksTaskIdMove.');
+        }
+
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling postProjectsProjectIdTasksTaskIdMove.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/{taskId}/move`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: MoveTaskRequestToJSON(requestParameters.moveTaskRequest),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * カードの移動
+     */
+    async postProjectsProjectIdTasksTaskIdMove(requestParameters: PostProjectsProjectIdTasksTaskIdMoveRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.postProjectsProjectIdTasksTaskIdMoveRaw(requestParameters, initOverrides);
+    }
 
     /**
      * プロジェクトの作成
      */
-    projectsPost({ createProjectRequest }: ProjectsPostRequest): Observable<ProjectResponse>
-    projectsPost({ createProjectRequest }: ProjectsPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<ProjectResponse>>
-    projectsPost({ createProjectRequest }: ProjectsPostRequest, opts?: OperationOpts): Observable<ProjectResponse | RawAjaxResponse<ProjectResponse>> {
+    async projectsPostRaw(requestParameters: ProjectsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ProjectResponse>> {
+        const queryParameters: any = {};
 
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
+        const headerParameters: runtime.HTTPHeaders = {};
 
-        return this.request<ProjectResponse>({
-            url: '/projects',
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects`,
             method: 'POST',
-            headers,
-            body: createProjectRequest,
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateProjectRequestToJSON(requestParameters.createProjectRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * プロジェクトの作成
+     */
+    async projectsPost(requestParameters: ProjectsPostRequest, initOverrides?: RequestInit): Promise<ProjectResponse> {
+        const response = await this.projectsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * プロジェクトの削除
      */
-    projectsProjectIdDelete({ projectId }: ProjectsProjectIdDeleteRequest): Observable<void>
-    projectsProjectIdDelete({ projectId }: ProjectsProjectIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    projectsProjectIdDelete({ projectId }: ProjectsProjectIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdDelete');
+    async projectsProjectIdDeleteRaw(requestParameters: ProjectsProjectIdDeleteRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdDelete.');
+        }
 
-        return this.request<void>({
-            url: '/projects/{projectId}'.replace('{projectId}', encodeURI(projectId)),
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'DELETE',
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * プロジェクトの削除
+     */
+    async projectsProjectIdDelete(requestParameters: ProjectsProjectIdDeleteRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.projectsProjectIdDeleteRaw(requestParameters, initOverrides);
+    }
 
     /**
      * プロジェクト取得(1件)
      */
-    projectsProjectIdGet({ projectId }: ProjectsProjectIdGetRequest): Observable<ProjectResponse>
-    projectsProjectIdGet({ projectId }: ProjectsProjectIdGetRequest, opts?: OperationOpts): Observable<RawAjaxResponse<ProjectResponse>>
-    projectsProjectIdGet({ projectId }: ProjectsProjectIdGetRequest, opts?: OperationOpts): Observable<ProjectResponse | RawAjaxResponse<ProjectResponse>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdGet');
+    async projectsProjectIdGetRaw(requestParameters: ProjectsProjectIdGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ProjectResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdGet.');
+        }
 
-        return this.request<ProjectResponse>({
-            url: '/projects/{projectId}'.replace('{projectId}', encodeURI(projectId)),
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'GET',
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * プロジェクト取得(1件)
+     */
+    async projectsProjectIdGet(requestParameters: ProjectsProjectIdGetRequest, initOverrides?: RequestInit): Promise<ProjectResponse> {
+        const response = await this.projectsProjectIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * ラベルの削除
      */
-    projectsProjectIdLabelsLabelIdDelete({ projectId, labelId }: ProjectsProjectIdLabelsLabelIdDeleteRequest): Observable<void>
-    projectsProjectIdLabelsLabelIdDelete({ projectId, labelId }: ProjectsProjectIdLabelsLabelIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    projectsProjectIdLabelsLabelIdDelete({ projectId, labelId }: ProjectsProjectIdLabelsLabelIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdLabelsLabelIdDelete');
-        throwIfNullOrUndefined(labelId, 'labelId', 'projectsProjectIdLabelsLabelIdDelete');
+    async projectsProjectIdLabelsLabelIdDeleteRaw(requestParameters: ProjectsProjectIdLabelsLabelIdDeleteRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdLabelsLabelIdDelete.');
+        }
 
-        return this.request<void>({
-            url: '/projects/{projectId}/labels/{labelId}'.replace('{projectId}', encodeURI(projectId)).replace('{labelId}', encodeURI(labelId)),
+        if (requestParameters.labelId === null || requestParameters.labelId === undefined) {
+            throw new runtime.RequiredError('labelId','Required parameter requestParameters.labelId was null or undefined when calling projectsProjectIdLabelsLabelIdDelete.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}/labels/{labelId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"labelId"}}`, encodeURIComponent(String(requestParameters.labelId))),
             method: 'DELETE',
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * ラベルの削除
+     */
+    async projectsProjectIdLabelsLabelIdDelete(requestParameters: ProjectsProjectIdLabelsLabelIdDeleteRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.projectsProjectIdLabelsLabelIdDeleteRaw(requestParameters, initOverrides);
+    }
 
     /**
      * ラベルの更新
      */
-    projectsProjectIdLabelsLabelIdPut({ projectId, labelId, updateLabelRequest }: ProjectsProjectIdLabelsLabelIdPutRequest): Observable<LabelResponse>
-    projectsProjectIdLabelsLabelIdPut({ projectId, labelId, updateLabelRequest }: ProjectsProjectIdLabelsLabelIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<LabelResponse>>
-    projectsProjectIdLabelsLabelIdPut({ projectId, labelId, updateLabelRequest }: ProjectsProjectIdLabelsLabelIdPutRequest, opts?: OperationOpts): Observable<LabelResponse | RawAjaxResponse<LabelResponse>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdLabelsLabelIdPut');
-        throwIfNullOrUndefined(labelId, 'labelId', 'projectsProjectIdLabelsLabelIdPut');
+    async projectsProjectIdLabelsLabelIdPutRaw(requestParameters: ProjectsProjectIdLabelsLabelIdPutRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<LabelResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdLabelsLabelIdPut.');
+        }
 
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
+        if (requestParameters.labelId === null || requestParameters.labelId === undefined) {
+            throw new runtime.RequiredError('labelId','Required parameter requestParameters.labelId was null or undefined when calling projectsProjectIdLabelsLabelIdPut.');
+        }
 
-        return this.request<LabelResponse>({
-            url: '/projects/{projectId}/labels/{labelId}'.replace('{projectId}', encodeURI(projectId)).replace('{labelId}', encodeURI(labelId)),
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/labels/{labelId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"labelId"}}`, encodeURIComponent(String(requestParameters.labelId))),
             method: 'PUT',
-            headers,
-            body: updateLabelRequest,
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateLabelRequestToJSON(requestParameters.updateLabelRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => LabelResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * ラベルの更新
+     */
+    async projectsProjectIdLabelsLabelIdPut(requestParameters: ProjectsProjectIdLabelsLabelIdPutRequest, initOverrides?: RequestInit): Promise<LabelResponse> {
+        const response = await this.projectsProjectIdLabelsLabelIdPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * ラベルの作成
      */
-    projectsProjectIdLabelsPost({ projectId, createLabelRequest }: ProjectsProjectIdLabelsPostRequest): Observable<LabelResponse>
-    projectsProjectIdLabelsPost({ projectId, createLabelRequest }: ProjectsProjectIdLabelsPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<LabelResponse>>
-    projectsProjectIdLabelsPost({ projectId, createLabelRequest }: ProjectsProjectIdLabelsPostRequest, opts?: OperationOpts): Observable<LabelResponse | RawAjaxResponse<LabelResponse>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdLabelsPost');
+    async projectsProjectIdLabelsPostRaw(requestParameters: ProjectsProjectIdLabelsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<LabelResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdLabelsPost.');
+        }
 
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
+        const queryParameters: any = {};
 
-        return this.request<LabelResponse>({
-            url: '/projects/{projectId}/labels/'.replace('{projectId}', encodeURI(projectId)),
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/labels/`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'POST',
-            headers,
-            body: createLabelRequest,
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateLabelRequestToJSON(requestParameters.createLabelRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => LabelResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * ラベルの作成
+     */
+    async projectsProjectIdLabelsPost(requestParameters: ProjectsProjectIdLabelsPostRequest, initOverrides?: RequestInit): Promise<LabelResponse> {
+        const response = await this.projectsProjectIdLabelsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * プロジェクトの更新
      */
-    projectsProjectIdPut({ projectId, updateProjectRequest }: ProjectsProjectIdPutRequest): Observable<ProjectResponse>
-    projectsProjectIdPut({ projectId, updateProjectRequest }: ProjectsProjectIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<ProjectResponse>>
-    projectsProjectIdPut({ projectId, updateProjectRequest }: ProjectsProjectIdPutRequest, opts?: OperationOpts): Observable<ProjectResponse | RawAjaxResponse<ProjectResponse>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdPut');
+    async projectsProjectIdPutRaw(requestParameters: ProjectsProjectIdPutRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ProjectResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdPut.');
+        }
 
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
+        const queryParameters: any = {};
 
-        return this.request<ProjectResponse>({
-            url: '/projects/{projectId}'.replace('{projectId}', encodeURI(projectId)),
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'PUT',
-            headers,
-            body: updateProjectRequest,
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateProjectRequestToJSON(requestParameters.updateProjectRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * プロジェクトの更新
+     */
+    async projectsProjectIdPut(requestParameters: ProjectsProjectIdPutRequest, initOverrides?: RequestInit): Promise<ProjectResponse> {
+        const response = await this.projectsProjectIdPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * タスクの作成
      */
-    projectsProjectIdTasksPost({ projectId, createTaskRequest }: ProjectsProjectIdTasksPostRequest): Observable<TaskResponse>
-    projectsProjectIdTasksPost({ projectId, createTaskRequest }: ProjectsProjectIdTasksPostRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
-    projectsProjectIdTasksPost({ projectId, createTaskRequest }: ProjectsProjectIdTasksPostRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdTasksPost');
+    async projectsProjectIdTasksPostRaw(requestParameters: ProjectsProjectIdTasksPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<TaskResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdTasksPost.');
+        }
 
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
+        const queryParameters: any = {};
 
-        return this.request<TaskResponse>({
-            url: '/projects/{projectId}/tasks/'.replace('{projectId}', encodeURI(projectId)),
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'POST',
-            headers,
-            body: createTaskRequest,
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateTaskRequestToJSON(requestParameters.createTaskRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TaskResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * タスクの作成
+     */
+    async projectsProjectIdTasksPost(requestParameters: ProjectsProjectIdTasksPostRequest, initOverrides?: RequestInit): Promise<TaskResponse> {
+        const response = await this.projectsProjectIdTasksPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * タスクの削除
      */
-    projectsProjectIdTasksTaskIdDelete({ projectId, taskId }: ProjectsProjectIdTasksTaskIdDeleteRequest): Observable<void>
-    projectsProjectIdTasksTaskIdDelete({ projectId, taskId }: ProjectsProjectIdTasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    projectsProjectIdTasksTaskIdDelete({ projectId, taskId }: ProjectsProjectIdTasksTaskIdDeleteRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdTasksTaskIdDelete');
-        throwIfNullOrUndefined(taskId, 'taskId', 'projectsProjectIdTasksTaskIdDelete');
+    async projectsProjectIdTasksTaskIdDeleteRaw(requestParameters: ProjectsProjectIdTasksTaskIdDeleteRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdTasksTaskIdDelete.');
+        }
 
-        return this.request<void>({
-            url: '/projects/{projectId}/tasks/{taskId}'.replace('{projectId}', encodeURI(projectId)).replace('{taskId}', encodeURI(taskId)),
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling projectsProjectIdTasksTaskIdDelete.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/{taskId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
             method: 'DELETE',
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * タスクの削除
+     */
+    async projectsProjectIdTasksTaskIdDelete(requestParameters: ProjectsProjectIdTasksTaskIdDeleteRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.projectsProjectIdTasksTaskIdDeleteRaw(requestParameters, initOverrides);
+    }
 
     /**
      * タスクの更新
      */
-    projectsProjectIdTasksTaskIdPut({ projectId, taskId, updateTaskRequest }: ProjectsProjectIdTasksTaskIdPutRequest): Observable<TaskResponse>
-    projectsProjectIdTasksTaskIdPut({ projectId, taskId, updateTaskRequest }: ProjectsProjectIdTasksTaskIdPutRequest, opts?: OperationOpts): Observable<RawAjaxResponse<TaskResponse>>
-    projectsProjectIdTasksTaskIdPut({ projectId, taskId, updateTaskRequest }: ProjectsProjectIdTasksTaskIdPutRequest, opts?: OperationOpts): Observable<TaskResponse | RawAjaxResponse<TaskResponse>> {
-        throwIfNullOrUndefined(projectId, 'projectId', 'projectsProjectIdTasksTaskIdPut');
-        throwIfNullOrUndefined(taskId, 'taskId', 'projectsProjectIdTasksTaskIdPut');
+    async projectsProjectIdTasksTaskIdPutRaw(requestParameters: ProjectsProjectIdTasksTaskIdPutRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<TaskResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling projectsProjectIdTasksTaskIdPut.');
+        }
 
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling projectsProjectIdTasksTaskIdPut.');
+        }
 
-        return this.request<TaskResponse>({
-            url: '/projects/{projectId}/tasks/{taskId}'.replace('{projectId}', encodeURI(projectId)).replace('{taskId}', encodeURI(taskId)),
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/{taskId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
             method: 'PUT',
-            headers,
-            body: updateTaskRequest,
-        }, opts?.responseOpts);
-    };
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateTaskRequestToJSON(requestParameters.updateTaskRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TaskResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * タスクの更新
+     */
+    async projectsProjectIdTasksTaskIdPut(requestParameters: ProjectsProjectIdTasksTaskIdPutRequest, initOverrides?: RequestInit): Promise<TaskResponse> {
+        const response = await this.projectsProjectIdTasksTaskIdPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * カラム更新
+     */
+    async putProjectsProjectIdColumnsColumnIdRaw(requestParameters: PutProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ColumnResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling putProjectsProjectIdColumnsColumnId.');
+        }
+
+        if (requestParameters.columnId === null || requestParameters.columnId === undefined) {
+            throw new runtime.RequiredError('columnId','Required parameter requestParameters.columnId was null or undefined when calling putProjectsProjectIdColumnsColumnId.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/columns/{columnId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"columnId"}}`, encodeURIComponent(String(requestParameters.columnId))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateColumnRequestToJSON(requestParameters.updateColumnRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ColumnResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * カラム更新
+     */
+    async putProjectsProjectIdColumnsColumnId(requestParameters: PutProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<ColumnResponse> {
+        const response = await this.putProjectsProjectIdColumnsColumnIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
 }

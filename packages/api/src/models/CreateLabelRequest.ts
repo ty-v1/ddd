@@ -32,6 +32,7 @@ export interface CreateLabelRequest {
      */
     description?: string;
     /**
+     * 
      * @type {string}
      * @memberof CreateLabelRequest
      */
@@ -49,8 +50,8 @@ export function CreateLabelRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     return {
         
         'name': json['name'],
-        'description': json['description'],
-        'projectId': json['projectId'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'color': json['color'],
     };
 }
 
@@ -65,7 +66,7 @@ export function CreateLabelRequestToJSON(value?: CreateLabelRequest | null): any
         
         'name': value.name,
         'description': value.description,
-        'projectId': value.projectId,
+        'color': value.color,
     };
 }
 

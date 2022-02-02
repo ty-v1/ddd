@@ -2,13 +2,16 @@
 apis/DefaultApi.ts
 apis/index.ts
 index.ts
+models/ColumnResponse.ts
+models/CreateColumnRequest.ts
 models/CreateLabelRequest.ts
 models/CreateProjectRequest.ts
 models/CreateTaskRequest.ts
 models/LabelResponse.ts
+models/MoveTaskRequest.ts
 models/ProjectResponse.ts
-models/SuspendTimerResponse.ts
 models/TaskResponse.ts
+models/UpdateColumnRequest.ts
 models/UpdateLabelRequest.ts
 models/UpdateProjectRequest.ts
 models/UpdateTaskRequest.ts

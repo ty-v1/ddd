@@ -43,6 +43,12 @@ export interface CreateTaskRequest {
      * @memberof CreateTaskRequest
      */
     labelIds: Array<string>;
+    /**
+     * カラムID
+     * @type {string}
+     * @memberof CreateTaskRequest
+     */
+    columnId: string;
 }
 
 export function CreateTaskRequestFromJSON(json: any): CreateTaskRequest {
@@ -58,8 +64,8 @@ export function CreateTaskRequestFromJSONTyped(json: any, ignoreDiscriminator: b
         'name': json['name'],
         'description': json['description'],
         'estimatedTime': json['estimatedTime'],
-        'projectId': json['projectId'],
         'labelIds': json['labelIds'],
+        'columnId': json['columnId'],
     };
 }
 
@@ -75,8 +81,8 @@ export function CreateTaskRequestToJSON(value?: CreateTaskRequest | null): any {
         'name': value.name,
         'description': value.description,
         'estimatedTime': value.estimatedTime,
-        'projectId': value.projectId,
         'labelIds': value.labelIds,
+        'columnId': value.columnId,
     };
 }
 
