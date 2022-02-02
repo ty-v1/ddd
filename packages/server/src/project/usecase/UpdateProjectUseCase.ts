@@ -10,34 +10,38 @@ export class UpdateProjectUseCase {
   constructor(
     @Inject(PROJECT_REPOSITORY)
     private readonly projectRepository: ProjectRepository,
-  ) {}
+  ) {
+  }
 
   exec(props: UpdateProjectProps): Observable<ProjectDto> {
-    return this.projectRepository.findById(props.id).pipe(
-      mergeMap((e) => {
-        if (isNil(e)) {
-          // TODO
-          throw new Error('');
-        }
+    return this.projectRepository.findById(ProjectId.from(props.id))
+      .pipe(
+        map((entity) => {
+          if (isNil(entity)) {
+            // TODO
+            throw new Error('');
+          }
 
-        e.rename(props.name);
-        e.changeDescription(props.description);
-        return this.projectRepository.update(e).pipe(
-          map((e) => ({
-            id: e.id,
-            name: e.name,
-            description: e.description,
-            createDateTime: e.createDateTime,
-            updateDateTime: e.updateDateTime,
-          })),
-        );
-      }),
-    );
+          return entity;
+        }),
+        mergeMap((entity) => {
+          entity.update(props);
+          return this.projectRepository.update(entity).pipe(
+            map((e) => ({
+              id: e.id,
+              name: e.name,
+              description: e.description,
+              createDateTime: e.createDateTime,
+              updateDateTime: e.updateDateTime,
+            })),
+          );
+        }),
+      );
   }
 }
 
 type UpdateProjectProps = {
-  readonly id: ProjectId;
-  readonly name: string;
-  readonly description: string;
+  readonly id: string;
+  readonly name?: string;
+  readonly description?: string;
 };

@@ -1,33 +1,30 @@
 import { LabelRepository } from '@/label/model/repository/LabelRepository';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/repository/PrismaService';
 import { LabelId } from '@/label/model/entity/LabelId';
 import { from, map, mergeAll, Observable } from 'rxjs';
 import { LabelEntity } from '@/label/model/entity/LabelEntity';
 import { ProjectId } from '@/project/model/entity/ProjectId';
 import { isNil } from 'lodash';
 import { restoreLabelEntity } from '@/label/model/entity/LabelFactory';
-import { convert, LocalDateTime } from '@js-joda/core';
-import { Color } from '@/label/model/entity/Color';
+import { InjectRepository } from '@nestjs/typeorm';
+import { LabelRecord } from '@/repository/record/LabelRecord';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MysqlLabelRepository implements LabelRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    @InjectRepository(LabelRecord)
+    private labelDao: Repository<LabelRecord>,
+  ) {
+  }
 
   delete(id: LabelId): Observable<void> {
-    const query = this.prisma.label.delete({ where: { id: id.value } });
+    const query = this.labelDao.delete(id.value);
     return from(query).pipe(map(() => void 0));
   }
 
   findById(id: LabelId): Observable<LabelEntity | undefined> {
-    const query = this.prisma.label.findUnique({
-      where: {
-        id: id.value,
-      },
-      include: {
-        project: false,
-      },
-    });
+    const query = this.labelDao.findOne(id.value);
 
     return from(query).pipe(
       map((e) => {
@@ -41,13 +38,8 @@ export class MysqlLabelRepository implements LabelRepository {
   }
 
   findByProjectId(id: ProjectId): Observable<LabelEntity> {
-    const query = this.prisma.label.findMany({
-      where: {
-        project_id: id.value,
-      },
-      include: {
-        project: false,
-      },
+    const query = this.labelDao.find({
+      projectId: id.value
     });
 
     return from(query).pipe(
@@ -57,47 +49,38 @@ export class MysqlLabelRepository implements LabelRepository {
   }
 
   save(entity: LabelEntity): Observable<LabelEntity> {
-    const query = this.prisma.label.create({
-      data: {
-        id: entity.id.value,
-        project_id: entity.projectId.value,
-        name: entity.name,
-        description: entity.description,
-        color: entity.color.rgb,
-        created_at: convert(entity.createDateTime).toDate(),
-        updated_at: convert(entity.updateDateTime).toDate(),
-        is_default: false,
-      },
-    });
-
+    const query = this.labelDao.save(LabelRecord.from(entity));
     return from(query).pipe(map((e) => restoreLabelEntity(e)));
   }
 
   update(entity: LabelEntity): Observable<LabelEntity> {
-    const query = this.prisma.label.update({
-      where: {
-        id: entity.id.value,
-      },
-      data: {
-        name: entity.name,
-        description: entity.description,
-        color: entity.color.rgb,
-        updated_at: convert(LocalDateTime.now()).toDate(),
-      },
-    });
-
+    const query = this.labelDao.save(LabelRecord.from(entity));
     return from(query).pipe(map((e) => restoreLabelEntity(e)));
   }
 
-  existsSameLabel(projectId: ProjectId, color: Color, name: string): Observable<boolean> {
-    const query = this.prisma.label.count({
+  existsSameLabel(props: {
+    readonly id?: LabelId,
+    readonly projectId: ProjectId,
+    readonly name: string
+  }): Observable<boolean> {
+
+    const query = this.labelDao.findOne({
       where: {
-        name,
-        project_id: projectId.value,
-        color: color.rgb,
+        name: props.name,
+        projectId: props.projectId.value,
       },
     });
 
-    return from(query).pipe(map((e) => e > 0));
+    return from(query).pipe(map((record) => {
+      if (record === undefined) {
+        return false;
+      }
+
+      if (props.id === undefined) {
+        return true;
+      }
+
+      return record.id !== props.id.value;
+    }));
   }
 }

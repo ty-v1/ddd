@@ -30,13 +30,12 @@ export interface CreateLabelRequest {
      * @type {string}
      * @memberof CreateLabelRequest
      */
-    description: string;
+    description?: string;
     /**
-     * プロジェクトのID
      * @type {string}
      * @memberof CreateLabelRequest
      */
-    projectId: string;
+    color: string;
 }
 
 export function CreateLabelRequestFromJSON(json: any): CreateLabelRequest {

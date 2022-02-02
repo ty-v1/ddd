@@ -1,4 +1,3 @@
-import { LocalDateTime } from '@js-joda/core';
 import { Color } from '@/label/model/entity/Color';
 import { LabelId } from '@/label/model/entity/LabelId';
 import { ProjectId } from '@/project/model/entity/ProjectId';
@@ -10,9 +9,8 @@ export class LabelEntity {
     private _description: string,
     private _color: Color,
     readonly projectId: ProjectId,
-    readonly createDateTime: LocalDateTime,
-    readonly updateDateTime: LocalDateTime,
-  ) {}
+  ) {
+  }
 
   get name(): string {
     return this._name;
@@ -24,6 +22,12 @@ export class LabelEntity {
 
   get color(): Color {
     return this._color;
+  }
+
+  update(props: { readonly name?: string, readonly description?: string, readonly color?: Color }): void {
+    this._name = props.name ?? this._name;
+    this._color = props.color ?? this._color;
+    this._description = props.description ?? this._description;
   }
 
   rename(name: string): void {

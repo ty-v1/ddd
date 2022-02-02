@@ -7,6 +7,4 @@ export type LabelDto = {
   readonly name: string;
   readonly color: Color;
   readonly description: string;
-  readonly createDateTime: LocalDateTime;
-  readonly updateDateTime: LocalDateTime;
 };

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { mergeMap, Observable } from 'rxjs';
+import { from, map, mergeMap, Observable } from 'rxjs';
 import { LABEL_REPOSITORY, LabelRepository } from '@/label/model/repository/LabelRepository';
 import { DetectLabelDuplicationDomainService } from '@/label/model/service/DetectLabelDuplicationDomainService';
 import { Color } from '@/label/model/entity/Color';
@@ -19,44 +19,58 @@ export class UpdateLabelUseCase {
     private readonly detectLabelDuplicationDomainService: DetectLabelDuplicationDomainService,
     @Inject(DETECT_PROJECT_EXISTENCE_DOMAIN_SERVICE)
     private readonly detectProjectExistenceDomainService: DetectProjectExistenceDomainService,
-  ) {}
+  ) {
+  }
 
   exec(props: UpdateLabelProps): Observable<LabelDto> {
     // TODO バリデーション
-    const labelId = LabelId.from(props.id);
-    const color = Color.from(props.color);
+    const id = LabelId.from(props.id);
+    const projectId = LabelId.from(props.id);
+    const color = props.color !== undefined ? Color.from(props.color) : undefined;
     const name = props.name;
+    const description = props.description;
 
-    return this.labelRepository.findById(labelId).pipe(
-      mergeMap((entity) => {
-        if (isNil(entity)) {
-          // TODO
-          throw new Error();
-        }
+    return this.labelRepository.findById(id)
+      .pipe(
+        map((entity) => {
+          if (isNil(entity)) {
+            // TODO
+            throw new Error();
+          }
 
-        if (entity.isSame(name, color)) {
-          // TODO
-          throw new Error();
-        }
+          return entity;
+        }),
+        mergeMap((entity) => {
+          if (name === undefined) {
+            return from([entity]);
+          }
 
-        return this.detectLabelDuplicationDomainService.exec(entity).pipe(
-          mergeMap((isDuplicated) => {
-            if (isDuplicated) {
-              // TODO
-              throw new Error();
-            }
+          return this.detectLabelDuplicationDomainService.exec({ id, name, projectId })
+            .pipe(map((isDuplicated) => {
+              if (isDuplicated) {
+                // TODO
+                throw new Error();
+              }
 
-            return this.labelRepository.update(entity);
-          }),
-        );
-      }),
-    );
+              return entity;
+            }));
+        }),
+        mergeMap((entity) => {
+          entity.update({
+            name,
+            color,
+            description
+          });
+          return this.labelRepository.update(entity);
+        })
+      );
   }
 }
 
 type UpdateLabelProps = {
   readonly id: string;
-  readonly color: string;
-  readonly name: string;
-  readonly description: string;
+  readonly projectId: string;
+  readonly name?: string;
+  readonly color?: string;
+  readonly description?: string;
 };

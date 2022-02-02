@@ -10,10 +10,11 @@ export class GetProjectUseCase {
   constructor(
     @Inject(PROJECT_REPOSITORY)
     private readonly projectRepository: ProjectRepository,
-  ) {}
+  ) {
+  }
 
   exec(props: GetProjectProps): Observable<ProjectDto> {
-    return this.projectRepository.findById(props.id).pipe(
+    return this.projectRepository.findById(ProjectId.from(props.id)).pipe(
       map((e) => {
         if (isNil(e)) {
           // TODO
@@ -33,5 +34,5 @@ export class GetProjectUseCase {
 }
 
 export type GetProjectProps = {
-  readonly id: ProjectId;
+  readonly id: string;
 };

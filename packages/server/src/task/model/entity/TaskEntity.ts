@@ -4,8 +4,6 @@ import { Set } from 'typescript-collections';
 import { LabelId } from '@/label/model/entity/LabelId';
 import { LocalDateTime } from '@js-joda/core';
 import { TaskStatus } from '@/task/model/entity/TaskStatus';
-import { Timer } from '@/task/model/entity/Timer';
-import { TimerHistory } from '@/task/model/entity/TimerHistory';
 
 export class TaskEntity {
   constructor(
@@ -15,7 +13,6 @@ export class TaskEntity {
     readonly projectId: ProjectId,
     private readonly labelSet: Set<LabelId>,
     private _status: TaskStatus,
-    private readonly timer: Timer,
     readonly createDateTime: LocalDateTime,
   ) {}
 
@@ -35,10 +32,6 @@ export class TaskEntity {
     return this._status;
   }
 
-  get histories(): readonly TimerHistory[] {
-    return this.timer.histories;
-  }
-
   addLabel(labelId: LabelId): void {
     this.labelSet.add(labelId);
   }
@@ -52,50 +45,11 @@ export class TaskEntity {
   }
 
   /**
-   * 再開する
-   */
-  resume(): void {
-    if (this._status === TaskStatus.InProgress || this._status === TaskStatus.InReview) {
-      this.timer.resume();
-    }
-  }
-
-  /**
-   * 一時停止する
-   */
-  suspend(): void {
-    if (this._status === TaskStatus.InProgress || this._status === TaskStatus.InReview) {
-      this.timer.suspend();
-    }
-  }
-
-  /**
-   * タスクを開始する
-   */
-  run(): void {
-    if (this._status === TaskStatus.ToDo) {
-      this._status = TaskStatus.InProgress;
-      this.timer.start();
-    }
-  }
-
-  /**
-   * タスクをレビュー中にする
-   */
-  submitReview(): void {
-    if (this._status === TaskStatus.InProgress) {
-      this._status = TaskStatus.InReview;
-      this.timer.resume();
-    }
-  }
-
-  /**
    * closeする
    */
   close(): void {
     if (this._status !== TaskStatus.Done) {
       this._status = TaskStatus.Done;
-      this.timer.stop();
     }
   }
 }

@@ -12,6 +12,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateProjectRequest'
+            examples: {}
       responses:
         '200':
           description: 成功時
@@ -36,6 +37,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectResponse'
+              examples: {}
     put:
       parameters:
         - in: path
@@ -69,7 +71,7 @@ paths:
       responses:
         '204':
           description: 成功時
-  /labels/:
+  '/projects/{projectId}/labels/':
     post:
       summary: ラベルの作成
       requestBody:
@@ -84,7 +86,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LabelResponse'
-  '/labels/{labelId}':
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+        description: プロジェクトID
+  '/projects/{projectId}/labels/{labelId}':
     put:
       parameters:
         - in: path
@@ -99,6 +108,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateLabelRequest'
+            examples: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+        description: ''
       responses:
         '200':
           description: 成功時
@@ -118,7 +133,20 @@ paths:
       responses:
         '204':
           description: 成功時
-  /tasks/:
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+        description: プロジェクトID
+      - schema:
+          type: string
+        name: labelId
+        in: path
+        required: true
+        description: ラベルID
+  '/projects/{projectId}/tasks/':
     post:
       summary: タスクの作成
       requestBody:
@@ -133,7 +161,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskResponse'
-  '/tasks/{taskId}':
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+        description: プロジェクトID
+  '/projects/{projectId}/tasks/{taskId}':
     put:
       parameters:
         - in: path
@@ -167,72 +202,21 @@ paths:
       responses:
         '204':
           description: 成功時
-  '/tasks/{taskId}/start_timer':
-    post:
-      parameters:
-        - in: path
-          name: taskId
-          schema:
-            type: string
-          required: true
-          description: タスクID
-      summary: 計測時間の記録開始
-      responses:
-        '200':
-          description: 成功時
-  '/tasks/{taskId}/suspend_timer':
-    post:
-      parameters:
-        - in: path
-          name: taskId
-          schema:
-            type: string
-          required: true
-          description: タスクID
-      summary: 計測時間の記録を一時停止
-      responses:
-        '200':
-          description: 成功時
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuspendTimerResponse'
-  '/projects/{projectId}/columns/{columnId}/tasks/{taskId}':
-    post:
-      parameters:
-        - in: path
-          name: projectId
-          schema:
-            type: string
-          required: true
-          description: プロジェクトID
-        - in: path
-          name: columnId
-          schema:
-            type: string
-          required: true
-          description: カラムID
-        - in: path
-          name: taskId
-          schema:
-            type: string
-          required: true
-          description: タスクID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateTaskRequest'
-            examples: {}
-      summary: タスクの並び替え
-      responses:
-        '200':
-          description: 成功時
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SortTaskRequest'
-      description: ''
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+        description: プロジェクトID
+      - schema:
+          type: string
+        name: taskId
+        in: path
+        required: true
+        description: タスクID
+  '/tasks/{taskId}/start_timer': {}
+  '/tasks/{taskId}/suspend_timer': {}
 components:
   schemas:
     CreateProjectRequest:
@@ -262,12 +246,6 @@ components:
           description: プロジェクトの説明
     ProjectResponse:
       type: object
-      required:
-        - id
-        - name
-        - description
-        - createDateTime
-        - updateDateTime
       properties:
         id:
           type: string
@@ -285,12 +263,14 @@ components:
         updateDateTime:
           type: string
           example: '2021-01-01T11:00:00'
-    CreateLabelRequest:
-      type: object
       required:
+        - id
         - name
         - description
-        - projectId
+        - createDateTime
+        - updateDateTime
+    CreateLabelRequest:
+      type: object
       properties:
         name:
           type: string
@@ -300,10 +280,11 @@ components:
           type: string
           maxLength: 512
           description: ラベルの説明
-        projectId:
+        color:
           type: string
-          format: uuid
-          description: プロジェクトのID
+      required:
+        - name
+        - color
     UpdateLabelRequest:
       type: object
       properties:
@@ -319,19 +300,8 @@ components:
           type: string
           description: ラベルの色(RGB形式)
           example: null
-        projectId:
-          type: string
-          format: uuid
-          description: プロジェクトのID
     LabelResponse:
       type: object
-      required:
-        - id
-        - name
-        - description
-        - color
-        - createDateTime
-        - updateDateTime
       properties:
         id:
           type: string
@@ -346,20 +316,13 @@ components:
         color:
           type: string
           example: null
-        createDateTime:
-          type: string
-          example: '2021-01-01T11:00:00'
-        updateDateTime:
-          type: string
-          example: '2021-01-01T11:00:00'
-    CreateTaskRequest:
-      type: object
       required:
+        - id
         - name
         - description
-        - estimatedTime
-        - projectId
-        - labelIds
+        - color
+    CreateTaskRequest:
+      type: object
       properties:
         name:
           type: string
@@ -373,16 +336,17 @@ components:
           type: string
           description: 見積もり時間
           example: '01:00'
-        projectId:
-          type: string
-          format: uuid
-          description: プロジェクトのID
         labelIds:
           type: array
           description: ラベル一覧
           items:
             type: string
             format: uuid
+      required:
+        - name
+        - description
+        - estimatedTime
+        - labelIds
     UpdateTaskRequest:
       type: object
       properties:
@@ -404,13 +368,6 @@ components:
           items:
             type: string
             format: uuid
-    SortTaskRequest:
-      type: object
-      properties:
-        previousId:
-          type: string
-          format: uuid
-          description: 1つ前のID
     TaskResponse:
       type: object
       required:
