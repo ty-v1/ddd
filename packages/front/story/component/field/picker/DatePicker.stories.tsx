@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from '@/component/field/picker/DatePicker';
+import DatePicker from '@/component/molecule/date_picker/DatePicker';
 import { LocalDate } from '@js-joda/core';
 import { Story, Meta } from '@storybook/react';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import TextArea from '@/component/field/textarea/TextArea';
+import TextArea from '@/component/atom/textarea/TextArea';
 
 TextArea.displayName = 'Text';
 

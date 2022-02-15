@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import Button from '@/component/field/button/Button';
+import Button from '@/component/atom/button/Button';
 
 Button.displayName = 'Button';
 

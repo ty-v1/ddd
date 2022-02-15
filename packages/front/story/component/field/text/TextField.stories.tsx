@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import TextField from '@/component/field/text/TextField';
+import TextField from '@/component/atom/text_field/TextField';
 
 TextField.displayName = 'Text';
 
