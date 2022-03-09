@@ -9,4 +9,4 @@ export const ApiContext = createContext<ApiContextProps>({
   api: new DefaultApi()
 });
 
-export const useDnDContext: (config: Configuration) => ApiContextProps = () => useContext(ApiContext);
+export const useApiContext: (config: Configuration) => ApiContextProps = () => useContext(ApiContext);
