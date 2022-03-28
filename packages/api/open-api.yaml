@@ -20,6 +20,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectResponse'
+    get:
+      summary: ''
+      operationId: get-projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProjectResponse'
+      description: プロジェクト一覧を取得
   '/projects/{projectId}':
     get:
       parameters:
@@ -562,3 +573,12 @@ components:
       required:
         - columnId
         - position
+    ListProjectResponse:
+      title: ListProjectResponse
+      type: object
+      description: ''
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectResponse'

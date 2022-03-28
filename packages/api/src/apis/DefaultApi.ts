@@ -33,6 +33,9 @@ import {
     LabelResponse,
     LabelResponseFromJSON,
     LabelResponseToJSON,
+    ListProjectResponse,
+    ListProjectResponseFromJSON,
+    ListProjectResponseToJSON,
     MoveTaskRequest,
     MoveTaskRequestFromJSON,
     MoveTaskRequestToJSON,
@@ -172,6 +175,32 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async deleteProjectsProjectIdColumnsColumnId(requestParameters: DeleteProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<void> {
         await this.deleteProjectsProjectIdColumnsColumnIdRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * プロジェクト一覧を取得
+     */
+    async getProjectsRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<ListProjectResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ListProjectResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * プロジェクト一覧を取得
+     */
+    async getProjects(initOverrides?: RequestInit): Promise<ListProjectResponse> {
+        const response = await this.getProjectsRaw(initOverrides);
+        return await response.value();
     }
 
     /**
