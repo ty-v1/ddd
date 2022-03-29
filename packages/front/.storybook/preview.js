@@ -9,3 +9,13 @@ export const parameters = {
     },
   },
 };
+
+export const decorators = [
+  (Story) => (
+    <>
+      <div data-color-mode="dark" data-dark-theme="dark_dimmed">
+        {Story()}
+      </div>
+    </>
+  ),
+];
