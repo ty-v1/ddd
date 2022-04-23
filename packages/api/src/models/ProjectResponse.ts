@@ -39,16 +39,16 @@ export interface ProjectResponse {
     description: string;
     /**
      * 
-     * @type {string}
+     * @type {Date}
      * @memberof ProjectResponse
      */
-    createDateTime: string;
+    createDateTime: Date;
     /**
      * 
-     * @type {string}
+     * @type {Date}
      * @memberof ProjectResponse
      */
-    updateDateTime: string;
+    updateDateTime: Date;
 }
 
 export function ProjectResponseFromJSON(json: any): ProjectResponse {
@@ -64,8 +64,8 @@ export function ProjectResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'name': json['name'],
         'description': json['description'],
-        'createDateTime': json['createDateTime'],
-        'updateDateTime': json['updateDateTime'],
+        'createDateTime': (new Date(json['createDateTime'])),
+        'updateDateTime': (new Date(json['updateDateTime'])),
     };
 }
 
@@ -81,8 +81,8 @@ export function ProjectResponseToJSON(value?: ProjectResponse | null): any {
         'id': value.id,
         'name': value.name,
         'description': value.description,
-        'createDateTime': value.createDateTime,
-        'updateDateTime': value.updateDateTime,
+        'createDateTime': (value.createDateTime.toISOString()),
+        'updateDateTime': (value.updateDateTime.toISOString()),
     };
 }
 

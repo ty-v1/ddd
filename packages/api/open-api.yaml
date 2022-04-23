@@ -331,6 +331,7 @@ components:
   schemas:
     ProjectResponse:
       type: object
+      x-extension-1: null
       properties:
         id:
           type: string
@@ -344,10 +345,12 @@ components:
           example: 自作Webアプリ
         createDateTime:
           type: string
-          example: '2021-01-01T11:00:00'
+          format: date-time
+          example: '2021-01-01T11:00:00.0Z'
         updateDateTime:
           type: string
-          example: '2021-01-01T11:00:00'
+          example: '2021-01-01T11:00:00.0Z'
+          format: date-time
       required:
         - id
         - name
