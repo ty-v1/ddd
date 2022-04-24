@@ -10,6 +10,7 @@ export type UseQueryWithSuspenseResult<T> = RequireData<UseQueryResult<T, unknow
 export const useQueryWithSuspense = <T extends unknown>(
   queryKey: QueryKey,
   fetcher: QueryFunction<T>,
+  enabled = true,
 ): UseQueryWithSuspenseResult<T> => {
-  return useQuery(queryKey, fetcher, { suspense: true }) as any;
+  return useQuery(queryKey, fetcher, { suspense: true, enabled }) as any;
 };
