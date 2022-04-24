@@ -10,6 +10,7 @@ models/CreateTaskRequest.ts
 models/LabelResponse.ts
 models/ListColumnResponse.ts
 models/ListProjectResponse.ts
+models/ListTaskResponse.ts
 models/MoveTaskRequest.ts
 models/ProjectResponse.ts
 models/TaskResponse.ts

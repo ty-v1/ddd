@@ -39,6 +39,9 @@ import {
     ListProjectResponse,
     ListProjectResponseFromJSON,
     ListProjectResponseToJSON,
+    ListTaskResponse,
+    ListTaskResponseFromJSON,
+    ListTaskResponseToJSON,
     MoveTaskRequest,
     MoveTaskRequestFromJSON,
     MoveTaskRequestToJSON,
@@ -74,6 +77,11 @@ export interface GetProjectsProjectIdColumnsRequest {
 export interface GetProjectsProjectIdColumnsColumnIdRequest {
     projectId: string;
     columnId: string;
+}
+
+export interface GetProjectsProjectIdTasksRequest {
+    projectId: string;
+    columnId?: string;
 }
 
 export interface PostProjectsProjectIdColumnsRequest {
@@ -267,6 +275,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getProjectsProjectIdColumnsColumnId(requestParameters: GetProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<ColumnResponse> {
         const response = await this.getProjectsProjectIdColumnsColumnIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getProjectsProjectIdTasksRaw(requestParameters: GetProjectsProjectIdTasksRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ListTaskResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getProjectsProjectIdTasks.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.columnId !== undefined) {
+            queryParameters['columnId'] = requestParameters.columnId;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ListTaskResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getProjectsProjectIdTasks(requestParameters: GetProjectsProjectIdTasksRequest, initOverrides?: RequestInit): Promise<ListTaskResponse> {
+        const response = await this.getProjectsProjectIdTasksRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

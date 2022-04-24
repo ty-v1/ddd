@@ -55,6 +55,12 @@ export interface TaskResponse {
      * @memberof TaskResponse
      */
     labelIds: Array<string>;
+    /**
+     * カラムID
+     * @type {string}
+     * @memberof TaskResponse
+     */
+    columnId: string | null;
 }
 
 export function TaskResponseFromJSON(json: any): TaskResponse {
@@ -73,6 +79,7 @@ export function TaskResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'estimatedTime': json['estimatedTime'],
         'elapsedTime': json['elapsedTime'],
         'labelIds': json['labelIds'],
+        'columnId': json['columnId'],
     };
 }
 
@@ -91,6 +98,7 @@ export function TaskResponseToJSON(value?: TaskResponse | null): any {
         'estimatedTime': value.estimatedTime,
         'elapsedTime': value.elapsedTime,
         'labelIds': value.labelIds,
+        'columnId': value.columnId,
     };
 }
 
