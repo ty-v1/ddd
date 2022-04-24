@@ -458,6 +458,9 @@ components:
     TaskResponse:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
         name:
           type: string
           maxLength: 32
@@ -492,6 +495,7 @@ components:
           description: カラムID
           nullable: true
       required:
+        - id
         - name
         - description
         - projectId
@@ -623,4 +627,6 @@ components:
       type: object
       properties:
         tasks:
-          $ref: '#/components/schemas/TaskResponse'
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'

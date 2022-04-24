@@ -20,6 +20,12 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TaskResponse {
     /**
+     * 
+     * @type {string}
+     * @memberof TaskResponse
+     */
+    id: string;
+    /**
      * タスク名
      * @type {string}
      * @memberof TaskResponse
@@ -73,6 +79,7 @@ export function TaskResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
+        'id': json['id'],
         'name': json['name'],
         'description': json['description'],
         'projectId': json['projectId'],
@@ -92,6 +99,7 @@ export function TaskResponseToJSON(value?: TaskResponse | null): any {
     }
     return {
         
+        'id': value.id,
         'name': value.name,
         'description': value.description,
         'projectId': value.projectId,
