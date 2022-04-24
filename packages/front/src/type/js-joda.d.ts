@@ -9,7 +9,10 @@ declare module '@js-joda/core' {
   }
 
   export interface DateTimeFormatterBuilder {
-    appendText(field: core.ChronoField, styleOrMap: core.TextStyle | Record<string | number, string>): DateTimeFormatterBuilder;
+    appendText(
+      field: core.ChronoField,
+      styleOrMap: core.TextStyle | Record<string | number, string>,
+    ): DateTimeFormatterBuilder;
 
     appendWeekField(field: string, count: number): DateTimeFormatterBuilder;
 

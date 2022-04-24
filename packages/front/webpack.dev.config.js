@@ -26,19 +26,7 @@ module.exports = () => {
         {
           test: [/\.css$/, /\.scss$/, /\.sass$/],
           exclude: /node_modules/,
-          use: [
-            {
-              loader: 'thread-loader',
-              options: {
-                workers: 2,
-                workerParallelJobs: 40,
-                workerNodeArgs: ['--max-old-space-size=512'],
-                name: 'css-loader-pool',
-              },
-            },
-            { loader: 'postcss-loader' },
-            { loader: 'sass-loader' },
-          ],
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
         },
         {
           test: /\.[jt]sx?$/,

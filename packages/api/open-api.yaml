@@ -20,6 +20,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectResponse'
+    get:
+      summary: ''
+      operationId: get-projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProjectResponse'
+      description: プロジェクト一覧を取得
   '/projects/{projectId}':
     get:
       parameters:
@@ -215,10 +226,137 @@ paths:
         in: path
         required: true
         description: タスクID
-  '/tasks/{taskId}/start_timer': {}
-  '/tasks/{taskId}/suspend_timer': {}
+  '/projects/{projectId}/columns':
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+        description: プロジェクトID
+    get:
+      summary: カラム取得
+      tags: []
+      responses: {}
+      operationId: get-projects-projectId-columns
+    post:
+      summary: カラム追加
+      operationId: post-projects-projectId-columns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ColumnResponse'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateColumnRequest'
+  '/projects/{projectId}/columns/{columnId}':
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+        description: プロジェクトID
+      - schema:
+          type: string
+        name: columnId
+        in: path
+        required: true
+        description: カラムID
+    get:
+      summary: カラム
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ColumnResponse'
+      operationId: get-projects-projectId-columns-columnId
+    put:
+      summary: カラム更新
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ColumnResponse'
+      operationId: put-projects-projectId-columns-columnId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateColumnRequest'
+    delete:
+      summary: カラム削除
+      tags: []
+      responses:
+        '204':
+          description: No Content
+      operationId: delete-projects-projectId-columns-columnId
+  '/projects/{projectId}/tasks/{taskId}/move':
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: taskId
+        in: path
+        required: true
+    post:
+      summary: カードの移動
+      tags: []
+      responses:
+        '202':
+          description: Accepted
+      operationId: post-projects-projectId-tasks-taskId-move
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveTaskRequest'
 components:
   schemas:
+    ProjectResponse:
+      type: object
+      x-extension-1: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 01FBBSWQX4EKDJ4VQHFNBCRPZQ
+        name:
+          type: string
+          example: MyWebApp
+        description:
+          type: string
+          example: 自作Webアプリ
+        createDateTime:
+          type: string
+          format: date-time
+          example: '2021-01-01T11:00:00.0Z'
+        updateDateTime:
+          type: string
+          example: '2021-01-01T11:00:00.0Z'
+          format: date-time
+      required:
+        - id
+        - name
+        - description
+        - createDateTime
+        - updateDateTime
     CreateProjectRequest:
       type: object
       required:
@@ -244,7 +382,7 @@ components:
           type: string
           maxLength: 256
           description: プロジェクトの説明
-    ProjectResponse:
+    LabelResponse:
       type: object
       properties:
         id:
@@ -253,22 +391,18 @@ components:
           example: 01FBBSWQX4EKDJ4VQHFNBCRPZQ
         name:
           type: string
-          example: MyWebApp
+          example: bug
         description:
           type: string
-          example: 自作Webアプリ
-        createDateTime:
+          example: bug
+        color:
           type: string
-          example: '2021-01-01T11:00:00'
-        updateDateTime:
-          type: string
-          example: '2021-01-01T11:00:00'
+          example: null
       required:
         - id
         - name
         - description
-        - createDateTime
-        - updateDateTime
+        - color
     CreateLabelRequest:
       type: object
       properties:
@@ -300,74 +434,6 @@ components:
           type: string
           description: ラベルの色(RGB形式)
           example: null
-    LabelResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 01FBBSWQX4EKDJ4VQHFNBCRPZQ
-        name:
-          type: string
-          example: bug
-        description:
-          type: string
-          example: bug
-        color:
-          type: string
-          example: null
-      required:
-        - id
-        - name
-        - description
-        - color
-    CreateTaskRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 32
-          description: タスク名
-        description:
-          type: string
-          maxLength: 512
-          description: タスクの説明
-        estimatedTime:
-          type: string
-          description: 見積もり時間
-          example: '01:00'
-        labelIds:
-          type: array
-          description: ラベル一覧
-          items:
-            type: string
-            format: uuid
-      required:
-        - name
-        - description
-        - estimatedTime
-        - labelIds
-    UpdateTaskRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 32
-          description: タスク名
-        description:
-          type: string
-          maxLength: 512
-          description: タスクの説明
-        estimatedTime:
-          type: string
-          description: 見積もり時間
-          example: '01:00'
-        labelIds:
-          type: array
-          description: ラベル一覧
-          items:
-            type: string
-            format: uuid
     TaskResponse:
       type: object
       required:
@@ -408,13 +474,114 @@ components:
           items:
             type: string
             format: uuid
-    SuspendTimerResponse:
+    CreateTaskRequest:
       type: object
-      required:
-        - elapsedTime
       properties:
-        elapsedTime:
+        name:
+          type: string
+          maxLength: 32
+          description: タスク名
+        description:
+          type: string
+          maxLength: 512
+          description: タスクの説明
+        estimatedTime:
+          type: string
+          description: 見積もり時間
+          example: '01:00'
+        labelIds:
+          type: array
+          description: ラベル一覧
+          items:
+            type: string
+            format: uuid
+        columnId:
+          type: string
+          description: カラムID
+      required:
+        - name
+        - description
+        - estimatedTime
+        - labelIds
+        - columnId
+    UpdateTaskRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 32
+          description: タスク名
+        description:
+          type: string
+          maxLength: 512
+          description: タスクの説明
+        estimatedTime:
+          type: string
+          description: 見積もり時間
+          example: '01:00'
+        labelIds:
+          type: array
+          description: ラベル一覧
+          items:
+            type: string
+            format: uuid
+        elapstedTime:
+          type: string
+          description: 経過時間
+    ColumnResponse:
+      title: ColumnResponse
+      type: object
+      properties:
+        id:
           type: string
           format: uuid
-          description: 計測時間
-          example: '01:00'
+          description: カラムID
+        name:
+          type: string
+          description: カラム名
+      required:
+        - id
+        - name
+    CreateColumnRequest:
+      title: CreateColumnRequest
+      type: object
+      properties:
+        name:
+          type: string
+          description: カラム名
+      required:
+        - name
+    UpdateColumnRequest:
+      title: UpdateColumnRequest
+      type: object
+      properties:
+        name:
+          type: string
+          description: カラム名
+      required:
+        - name
+      description: ''
+    MoveTaskRequest:
+      title: MoveTaskRequest
+      type: object
+      properties:
+        columnId:
+          type: string
+          description: 移動先のカラムのID
+        position:
+          type: string
+          description: |-
+            移動先での位置
+            top, bottom, after:<id>のいずれか
+      required:
+        - columnId
+        - position
+    ListProjectResponse:
+      title: ListProjectResponse
+      type: object
+      description: ''
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectResponse'

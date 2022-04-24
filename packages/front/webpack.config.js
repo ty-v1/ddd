@@ -1,5 +1,4 @@
 const path = require('path');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -23,20 +22,7 @@ module.exports = {
       {
         test: [/\.css$/, /\.scss$/, /\.sass$/],
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'thread-loader',
-            options: {
-              workers: 2,
-              workerParallelJobs: 40,
-              workerNodeArgs: ['--max-old-space-size=512'],
-              name: 'css-loader-pool',
-            },
-          },
-          { loader: MiniCssExtractPlugin.loader },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' },
-        ],
+        use: ['style-loader', 'css-loader', { loader: MiniCssExtractPlugin.loader }, 'postcss-loader', 'sass-loader'],
       },
       {
         test: /\.ts$/,
@@ -87,7 +73,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/index.html',

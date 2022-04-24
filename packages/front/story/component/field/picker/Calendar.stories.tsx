@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendar from '@/component/field/picker/Calendar';
+import Calendar from '@/component/molecule/calendar/Calendar';
 import { Meta, Story } from '@storybook/react';
 
 Calendar.displayName = 'Calendar';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DateTimeFormatter, LocalDate } from '@js-joda/core';
-import Calendar from '@/component/field/picker/Calendar';
-import Popper from '@/component/popper/Popper';
+import Calendar from '@/component/molecule/calendar/Calendar';
+import Popper from '@/component/atom/popper/Popper';
 
 const DateFormat = DateTimeFormatter.ofPattern('yyyy-MM-dd');
 

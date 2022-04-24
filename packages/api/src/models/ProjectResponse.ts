@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,34 +12,78 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface ProjectResponse
  */
 export interface ProjectResponse {
     /**
+     * 
      * @type {string}
      * @memberof ProjectResponse
      */
     id: string;
     /**
+     * 
      * @type {string}
      * @memberof ProjectResponse
      */
     name: string;
     /**
+     * 
      * @type {string}
      * @memberof ProjectResponse
      */
     description: string;
     /**
-     * @type {string}
+     * 
+     * @type {Date}
      * @memberof ProjectResponse
      */
-    createDateTime: string;
+    createDateTime: Date;
     /**
-     * @type {string}
+     * 
+     * @type {Date}
      * @memberof ProjectResponse
      */
-    updateDateTime: string;
+    updateDateTime: Date;
 }
+
+export function ProjectResponseFromJSON(json: any): ProjectResponse {
+    return ProjectResponseFromJSONTyped(json, false);
+}
+
+export function ProjectResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProjectResponse {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'id': json['id'],
+        'name': json['name'],
+        'description': json['description'],
+        'createDateTime': (new Date(json['createDateTime'])),
+        'updateDateTime': (new Date(json['updateDateTime'])),
+    };
+}
+
+export function ProjectResponseToJSON(value?: ProjectResponse | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'id': value.id,
+        'name': value.name,
+        'description': value.description,
+        'createDateTime': (value.createDateTime.toISOString()),
+        'updateDateTime': (value.updateDateTime.toISOString()),
+    };
+}
+
+

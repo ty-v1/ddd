@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,7 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface UpdateTaskRequest
  */
@@ -40,4 +43,47 @@ export interface UpdateTaskRequest {
      * @memberof UpdateTaskRequest
      */
     labelIds?: Array<string>;
+    /**
+     * 経過時間
+     * @type {string}
+     * @memberof UpdateTaskRequest
+     */
+    elapstedTime?: string;
 }
+
+export function UpdateTaskRequestFromJSON(json: any): UpdateTaskRequest {
+    return UpdateTaskRequestFromJSONTyped(json, false);
+}
+
+export function UpdateTaskRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateTaskRequest {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'estimatedTime': !exists(json, 'estimatedTime') ? undefined : json['estimatedTime'],
+        'labelIds': !exists(json, 'labelIds') ? undefined : json['labelIds'],
+        'elapstedTime': !exists(json, 'elapstedTime') ? undefined : json['elapstedTime'],
+    };
+}
+
+export function UpdateTaskRequestToJSON(value?: UpdateTaskRequest | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'name': value.name,
+        'description': value.description,
+        'estimatedTime': value.estimatedTime,
+        'labelIds': value.labelIds,
+        'elapstedTime': value.elapstedTime,
+    };
+}
+
+

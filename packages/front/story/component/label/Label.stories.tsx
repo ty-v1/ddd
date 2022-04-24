@@ -1,5 +1,5 @@
 import React from 'react';
-import Label from '@/component/label/Label';
+import Label from '@/component/atom/label/Label';
 import { Meta } from '@storybook/react';
 
 Label.displayName = 'Label';

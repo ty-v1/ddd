@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * DDD
  * Title
@@ -11,7 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
 /**
+ * 
  * @export
  * @interface TaskResponse
  */
@@ -53,3 +56,42 @@ export interface TaskResponse {
      */
     labelIds: Array<string>;
 }
+
+export function TaskResponseFromJSON(json: any): TaskResponse {
+    return TaskResponseFromJSONTyped(json, false);
+}
+
+export function TaskResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): TaskResponse {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'name': json['name'],
+        'description': json['description'],
+        'projectId': json['projectId'],
+        'estimatedTime': json['estimatedTime'],
+        'elapsedTime': json['elapsedTime'],
+        'labelIds': json['labelIds'],
+    };
+}
+
+export function TaskResponseToJSON(value?: TaskResponse | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'name': value.name,
+        'description': value.description,
+        'projectId': value.projectId,
+        'estimatedTime': value.estimatedTime,
+        'elapsedTime': value.elapsedTime,
+        'labelIds': value.labelIds,
+    };
+}
+
+
