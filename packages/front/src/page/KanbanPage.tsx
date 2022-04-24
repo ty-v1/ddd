@@ -1,13 +1,13 @@
 import React, { Suspense } from 'react';
 import { PageTemplate } from '@/page/PageTemplate';
-import { Kanban } from '@/component/kanban/Kanban';
+import { ProjectColumns } from '@/component/organism/project/ProjectColumns';
 
 export const KanbanPage: React.FC = () => {
 
   return (
     <PageTemplate>
       <Suspense fallback={'loading'}>
-        <Kanban/>
+        <ProjectColumns/>
       </Suspense>
     </PageTemplate>
   );
