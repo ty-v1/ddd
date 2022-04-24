@@ -33,6 +33,9 @@ import {
     LabelResponse,
     LabelResponseFromJSON,
     LabelResponseToJSON,
+    ListColumnResponse,
+    ListColumnResponseFromJSON,
+    ListColumnResponseToJSON,
     ListProjectResponse,
     ListProjectResponseFromJSON,
     ListProjectResponseToJSON,
@@ -206,7 +209,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * カラム取得
      */
-    async getProjectsProjectIdColumnsRaw(requestParameters: GetProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    async getProjectsProjectIdColumnsRaw(requestParameters: GetProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ListColumnResponse>> {
         if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
             throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getProjectsProjectIdColumns.');
         }
@@ -222,14 +225,15 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => ListColumnResponseFromJSON(jsonValue));
     }
 
     /**
      * カラム取得
      */
-    async getProjectsProjectIdColumns(requestParameters: GetProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<void> {
-        await this.getProjectsProjectIdColumnsRaw(requestParameters, initOverrides);
+    async getProjectsProjectIdColumns(requestParameters: GetProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<ListColumnResponse> {
+        const response = await this.getProjectsProjectIdColumnsRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
