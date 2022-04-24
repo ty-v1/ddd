@@ -179,6 +179,21 @@ paths:
         in: path
         required: true
         description: プロジェクトID
+    get:
+      summary: ''
+      operationId: get-projects-projectId-tasks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTaskResponse'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: columnId
   '/projects/{projectId}/tasks/{taskId}':
     put:
       parameters:
@@ -442,15 +457,6 @@ components:
           example: null
     TaskResponse:
       type: object
-      required:
-        - name
-        - description
-        - projectId
-        - labelIds
-        - status
-        - estimatedTime
-        - elapsedTime
-        - createDateTime
       properties:
         name:
           type: string
@@ -480,6 +486,19 @@ components:
           items:
             type: string
             format: uuid
+        columnId:
+          type: string
+          format: uuid
+          description: カラムID
+          nullable: true
+      required:
+        - name
+        - description
+        - projectId
+        - estimatedTime
+        - elapsedTime
+        - labelIds
+        - columnId
     CreateTaskRequest:
       type: object
       properties:
@@ -599,3 +618,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ColumnResponse'
+    ListTaskResponse:
+      title: ListTaskResponse
+      type: object
+      properties:
+        tasks:
+          $ref: '#/components/schemas/TaskResponse'
