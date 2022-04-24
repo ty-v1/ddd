@@ -237,7 +237,13 @@ paths:
     get:
       summary: カラム取得
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListColumnResponse'
       operationId: get-projects-projectId-columns
     post:
       summary: カラム追加
@@ -585,3 +591,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectResponse'
+    ListColumnResponse:
+      title: ListColumnResponse
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnResponse'
