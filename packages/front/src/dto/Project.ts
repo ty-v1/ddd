@@ -14,6 +14,12 @@ export const fromResponse: (response: ProjectResponse) => Project = (response) =
   id: response.id,
   name: response.name,
   description: response.description,
-  createDateTime: LocalDateTime.parse(response.createDateTime, ApiResponseDateTimeFormatter),
-  updateDateTime: LocalDateTime.parse(response.updateDateTime, ApiResponseDateTimeFormatter),
+  createDateTime: LocalDateTime.parse(
+    response.createDateTime.toISOString(),
+    ApiResponseDateTimeFormatter
+  ),
+  updateDateTime: LocalDateTime.parse(
+    response.updateDateTime.toISOString(),
+    ApiResponseDateTimeFormatter
+  ),
 });
