@@ -1,22 +1,16 @@
 import React, { CSSProperties, DragEvent, DragEventHandler, ReactNode } from 'react';
 import { useDnDContext } from '@/hook/dnd/DnDContext';
+import styled from 'styled-components';
 
 type Props = {
   readonly index: number;
   readonly group: string;
-  readonly width?: string;
-  readonly height?: string;
   readonly children?: ReactNode;
 }
-
 
 // TODO css
 const style: CSSProperties = {
   cursor: 'move',
-  padding: '16px',
-  borderStyle: 'solid',
-  borderWidth: '1px',
-  borderColor: 'black',
 };
 
 export const Card: React.FC<Props> = (props) => {
@@ -32,13 +26,9 @@ export const Card: React.FC<Props> = (props) => {
   const {
     index,
     group,
-    width,
-    height,
     children
   } = {
     ...props,
-    width: '100px',
-    height: '100px'
   };
 
   const handleDragStart: DragEventHandler = (event) => {
@@ -73,18 +63,26 @@ export const Card: React.FC<Props> = (props) => {
   const handleDragEnd = () => onDragEnd();
 
   return (
-    <div draggable
-         onDrop={handleDrop}
-         onDragOver={handleDragOver}
-         onDragStart={handleDragStart}
-         onDragEnd={handleDragEnd}
-         onDragEnter={handleDragenter}
-         style={{
-           ...style,
-           width,
-           height
-         }}>
+    <Wrapper className="Box p-2 color-bg-overlay mb-2"
+             draggable
+             onDrop={handleDrop}
+             onDragOver={handleDragOver}
+             onDragStart={handleDragStart}
+             onDragEnd={handleDragEnd}
+             onDragEnter={handleDragenter}
+             style={style}>
       {children}
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  min-width: 400px;
+  width: 400px;
+
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;

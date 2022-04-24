@@ -1,5 +1,5 @@
 import React, { DragEvent, ReactElement, ReactNode } from 'react';
-import { Card } from '@/component/card/Card';
+import { Card } from '@/component/molecule/card/Card';
 import Immutable from 'immutable';
 import { useDnDContext } from '@/hook/dnd/DnDContext';
 
@@ -33,7 +33,8 @@ export const CardList: <T, >(props: Props<T>) => ReactElement<Props<T>> = <T, >(
   });
 
   return (
-    <div onDragOverCapture={handleDragOver}>
+    <div className="p-2 mx-2"
+         onDragOverCapture={handleDragOver}>
       {cards}
     </div>
   );

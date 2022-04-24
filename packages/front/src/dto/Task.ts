@@ -1,9 +1,8 @@
+// TODO add properties
 export type Task = {
   readonly id: string;
-  readonly title: string;
+  readonly name: string;
   readonly description: string;
-  readonly order: number;
-  readonly status: TaskStatus;
+  // readonly order: number;
+  // readonly status: string;
 }
-
-export type TaskStatus = 'ToDo' | 'Doing' | 'Done';
