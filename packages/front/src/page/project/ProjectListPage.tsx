@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { PageTemplate } from '@/page/PageTemplate';
 import { ProjectBox } from '@/component/organism/project_box/ProjectBox';
 import { useListProjectQuery } from '@/hook/query/project/useListProjectQuery';
