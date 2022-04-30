@@ -28,7 +28,7 @@ export const ProjectColumn: React.FC<Props> = ({ column }) => {
   const { groupToItems } = useDnDContext<Task>();
 
   return (
-    <div className="Box height-full">
+    <div className="Box height-full width-full">
       <div className="Box-header">
         {/*TODO*/}
         <h3>{'Project Name'}</h3>

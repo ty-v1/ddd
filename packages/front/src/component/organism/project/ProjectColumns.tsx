@@ -35,10 +35,12 @@ export const ProjectColumns: React.FC = () => {
 
   return (
     <DnDContext.Provider value={context}>
-      <div>
+      <div className="d-flex">
         {
           columns.map((e) => (
-            <ProjectColumn key={e.id} column={e}/>
+            <div key={e.id} className="mx-1" style={{ width: '450px' }}>
+              <ProjectColumn column={e}/>
+            </div>
           ))
         }
       </div>
