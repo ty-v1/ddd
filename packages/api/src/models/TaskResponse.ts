@@ -20,6 +20,12 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TaskResponse {
     /**
+     * 
+     * @type {string}
+     * @memberof TaskResponse
+     */
+    id: string;
+    /**
      * タスク名
      * @type {string}
      * @memberof TaskResponse
@@ -39,22 +45,44 @@ export interface TaskResponse {
     projectId: string;
     /**
      * 見積もり時間
-     * @type {string}
+     * @type {number}
      * @memberof TaskResponse
      */
-    estimatedTime: string;
+    estimatedTime: number;
     /**
      * 計測時間
-     * @type {string}
+     * @type {number}
      * @memberof TaskResponse
      */
-    elapsedTime: string;
+    elapsedTime: number;
     /**
      * ラベル一覧
      * @type {Array<string>}
      * @memberof TaskResponse
      */
     labelIds: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TaskResponse
+     */
+    status: TaskResponseStatusEnum;
+    /**
+     * 
+     * @type {Date}
+     * @memberof TaskResponse
+     */
+    createDateTime: Date;
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum TaskResponseStatusEnum {
+    Todo = 'todo',
+    Doing = 'doing',
+    Done = 'done'
 }
 
 export function TaskResponseFromJSON(json: any): TaskResponse {
@@ -67,12 +95,15 @@ export function TaskResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
+        'id': json['id'],
         'name': json['name'],
         'description': json['description'],
         'projectId': json['projectId'],
         'estimatedTime': json['estimatedTime'],
         'elapsedTime': json['elapsedTime'],
         'labelIds': json['labelIds'],
+        'status': json['status'],
+        'createDateTime': (new Date(json['createDateTime'])),
     };
 }
 
@@ -85,12 +116,15 @@ export function TaskResponseToJSON(value?: TaskResponse | null): any {
     }
     return {
         
+        'id': value.id,
         'name': value.name,
         'description': value.description,
         'projectId': value.projectId,
         'estimatedTime': value.estimatedTime,
         'elapsedTime': value.elapsedTime,
         'labelIds': value.labelIds,
+        'status': value.status,
+        'createDateTime': (value.createDateTime.toISOString()),
     };
 }
 

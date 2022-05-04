@@ -179,6 +179,21 @@ paths:
         in: path
         required: true
         description: プロジェクトID
+    get:
+      summary: ''
+      operationId: get-projects-projectId-tasks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTaskResponse'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: columnId
   '/projects/{projectId}/tasks/{taskId}':
     put:
       parameters:
@@ -237,7 +252,13 @@ paths:
     get:
       summary: カラム取得
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListColumnResponse'
       operationId: get-projects-projectId-columns
     post:
       summary: カラム追加
@@ -436,16 +457,11 @@ components:
           example: null
     TaskResponse:
       type: object
-      required:
-        - name
-        - description
-        - projectId
-        - labelIds
-        - status
-        - estimatedTime
-        - elapsedTime
-        - createDateTime
+      description: ''
       properties:
+        id:
+          type: string
+          format: uuid
         name:
           type: string
           maxLength: 32
@@ -459,21 +475,41 @@ components:
           format: uuid
           description: プロジェクトのID
         estimatedTime:
-          type: string
-          format: uuid
+          type: integer
+          format: int32
           description: 見積もり時間
-          example: '01:00'
+          minimum: 0
         elapsedTime:
-          type: string
-          format: uuid
+          type: integer
+          format: int32
           description: 計測時間
-          example: '01:00'
+          example: '60'
+          minimum: 0
         labelIds:
           type: array
           description: ラベル一覧
           items:
             type: string
             format: uuid
+        status:
+          type: string
+          enum:
+            - todo
+            - doing
+            - done
+        createDateTime:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - description
+        - projectId
+        - estimatedTime
+        - elapsedTime
+        - labelIds
+        - status
+        - createDateTime
     CreateTaskRequest:
       type: object
       properties:
@@ -585,3 +621,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectResponse'
+    ListColumnResponse:
+      title: ListColumnResponse
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnResponse'
+    ListTaskResponse:
+      title: ListTaskResponse
+      type: object
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'
+        total:
+          type: integer
+          minimum: 0
+        todoCount:
+          type: integer
+          minimum: 0
+        doingCount:
+          type: integer
+          minimum: 0
+        doneCount:
+          type: integer
+          minimum: 0
+      required:
+        - tasks
+        - total
+        - todoCount
+        - doingCount
+        - doneCount
