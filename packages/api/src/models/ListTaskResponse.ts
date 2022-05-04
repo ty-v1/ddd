@@ -31,7 +31,31 @@ export interface ListTaskResponse {
      * @type {Array<TaskResponse>}
      * @memberof ListTaskResponse
      */
-    tasks?: Array<TaskResponse>;
+    tasks: Array<TaskResponse>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListTaskResponse
+     */
+    total: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListTaskResponse
+     */
+    todoCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListTaskResponse
+     */
+    doingCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListTaskResponse
+     */
+    doneCount: number;
 }
 
 export function ListTaskResponseFromJSON(json: any): ListTaskResponse {
@@ -44,7 +68,11 @@ export function ListTaskResponseFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'tasks': !exists(json, 'tasks') ? undefined : ((json['tasks'] as Array<any>).map(TaskResponseFromJSON)),
+        'tasks': ((json['tasks'] as Array<any>).map(TaskResponseFromJSON)),
+        'total': json['total'],
+        'todoCount': json['todoCount'],
+        'doingCount': json['doingCount'],
+        'doneCount': json['doneCount'],
     };
 }
 
@@ -57,7 +85,11 @@ export function ListTaskResponseToJSON(value?: ListTaskResponse | null): any {
     }
     return {
         
-        'tasks': value.tasks === undefined ? undefined : ((value.tasks as Array<any>).map(TaskResponseToJSON)),
+        'tasks': ((value.tasks as Array<any>).map(TaskResponseToJSON)),
+        'total': value.total,
+        'todoCount': value.todoCount,
+        'doingCount': value.doingCount,
+        'doneCount': value.doneCount,
     };
 }
 

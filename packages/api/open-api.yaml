@@ -457,6 +457,7 @@ components:
           example: null
     TaskResponse:
       type: object
+      description: ''
       properties:
         id:
           type: string
@@ -474,26 +475,31 @@ components:
           format: uuid
           description: プロジェクトのID
         estimatedTime:
-          type: string
-          format: uuid
+          type: integer
+          format: int32
           description: 見積もり時間
-          example: '01:00'
+          minimum: 0
         elapsedTime:
-          type: string
-          format: uuid
+          type: integer
+          format: int32
           description: 計測時間
-          example: '01:00'
+          example: '60'
+          minimum: 0
         labelIds:
           type: array
           description: ラベル一覧
           items:
             type: string
             format: uuid
-        columnId:
+        status:
           type: string
-          format: uuid
-          description: カラムID
-          nullable: true
+          enum:
+            - todo
+            - doing
+            - done
+        createDateTime:
+          type: string
+          format: date-time
       required:
         - id
         - name
@@ -502,7 +508,8 @@ components:
         - estimatedTime
         - elapsedTime
         - labelIds
-        - columnId
+        - status
+        - createDateTime
     CreateTaskRequest:
       type: object
       properties:
@@ -630,3 +637,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TaskResponse'
+        total:
+          type: integer
+          minimum: 0
+        todoCount:
+          type: integer
+          minimum: 0
+        doingCount:
+          type: integer
+          minimum: 0
+        doneCount:
+          type: integer
+          minimum: 0
+      required:
+        - tasks
+        - total
+        - todoCount
+        - doingCount
+        - doneCount

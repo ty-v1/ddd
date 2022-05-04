@@ -45,16 +45,16 @@ export interface TaskResponse {
     projectId: string;
     /**
      * 見積もり時間
-     * @type {string}
+     * @type {number}
      * @memberof TaskResponse
      */
-    estimatedTime: string;
+    estimatedTime: number;
     /**
      * 計測時間
-     * @type {string}
+     * @type {number}
      * @memberof TaskResponse
      */
-    elapsedTime: string;
+    elapsedTime: number;
     /**
      * ラベル一覧
      * @type {Array<string>}
@@ -62,11 +62,27 @@ export interface TaskResponse {
      */
     labelIds: Array<string>;
     /**
-     * カラムID
+     * 
      * @type {string}
      * @memberof TaskResponse
      */
-    columnId: string | null;
+    status: TaskResponseStatusEnum;
+    /**
+     * 
+     * @type {Date}
+     * @memberof TaskResponse
+     */
+    createDateTime: Date;
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum TaskResponseStatusEnum {
+    Todo = 'todo',
+    Doing = 'doing',
+    Done = 'done'
 }
 
 export function TaskResponseFromJSON(json: any): TaskResponse {
@@ -86,7 +102,8 @@ export function TaskResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'estimatedTime': json['estimatedTime'],
         'elapsedTime': json['elapsedTime'],
         'labelIds': json['labelIds'],
-        'columnId': json['columnId'],
+        'status': json['status'],
+        'createDateTime': (new Date(json['createDateTime'])),
     };
 }
 
@@ -106,7 +123,8 @@ export function TaskResponseToJSON(value?: TaskResponse | null): any {
         'estimatedTime': value.estimatedTime,
         'elapsedTime': value.elapsedTime,
         'labelIds': value.labelIds,
-        'columnId': value.columnId,
+        'status': value.status,
+        'createDateTime': (value.createDateTime.toISOString()),
     };
 }
 
