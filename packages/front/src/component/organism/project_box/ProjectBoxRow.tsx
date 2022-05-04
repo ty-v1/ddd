@@ -1,9 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { DefaultDateFormatter } from '@/util/constants';
 import { Project } from '@/dto/Project';
 import { MdAccessTime } from 'react-icons/all';
 import { Markdown } from '@/component/organism/markdown/Markdown';
+import { TimeStamp } from '@/component/atom/time_stamp/TimeStamp';
 
 type ProjectBoxRowProps = {
   readonly project: Project;
@@ -32,8 +32,3 @@ export const ProjectBoxRow: React.FC<ProjectBoxRowProps> = ({ project }) => {
     </div>
   );
 };
-
-const TimeStamp = styled.span`
-  vertical-align: 0.15em;
-  margin-left: 0.2em;
-`;
