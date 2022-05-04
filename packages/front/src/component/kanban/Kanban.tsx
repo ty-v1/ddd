@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import { useDnD } from '@/hook/dnd/useDnD';
 import { Task, TaskStatus } from '@/dto/Task';
 import { TaskList } from '@/component/kanban/TaskList';
-import { useListTaskQuery } from '@/hook/query/useListTaskQuery';
+import { useListTaskQuery } from '@/hook/query/task/useListTaskQuery';
 
 
 export const Kanban: React.FC = () => {
