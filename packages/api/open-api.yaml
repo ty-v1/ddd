@@ -241,6 +241,16 @@ paths:
         in: path
         required: true
         description: タスクID
+    get:
+      summary: ''
+      operationId: get-projects-projectId-tasks-taskId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
   '/projects/{projectId}/columns':
     parameters:
       - schema:
