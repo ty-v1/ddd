@@ -1,11 +1,11 @@
 import React from 'react';
-import { Task } from '@/dto/Task';
+import { TaskDto } from '@/dto/TaskDto';
 import { MdAccessTime } from 'react-icons/all';
 import { DefaultDateFormatter } from '@/util/constants';
 import { TimeStamp } from '@/component/atom/time_stamp/TimeStamp';
 
 type Props = {
-  readonly task: Task;
+  readonly task: TaskDto;
 }
 
 export const TaskBoxRow: React.FC<Props> = ({ task }) => {

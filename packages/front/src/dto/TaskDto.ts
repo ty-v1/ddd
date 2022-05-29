@@ -3,7 +3,7 @@ import { ChronoUnit, Duration, LocalDateTime } from '@js-joda/core';
 import { ApiResponseDateTimeFormatter } from '@/util/constants';
 
 // ToDo ラベル
-export type Task = {
+export type TaskDto = {
   readonly id: string;
   readonly name: string;
   readonly description: string;
@@ -15,7 +15,7 @@ export type Task = {
 
 export type TaskStatus = 'todo' | 'doing' | 'done';
 
-export const fromResponse: (response: TaskResponse) => Task = (response) => {
+export const fromResponse: (response: TaskResponse) => TaskDto = (response) => {
   return {
     id: response.id,
     description: response.description,
