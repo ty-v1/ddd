@@ -32,12 +32,6 @@ export interface TaskResponse {
      */
     name: string;
     /**
-     * タスクの説明
-     * @type {string}
-     * @memberof TaskResponse
-     */
-    description: string;
-    /**
      * プロジェクトのID
      * @type {string}
      * @memberof TaskResponse
@@ -97,7 +91,6 @@ export function TaskResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
         
         'id': json['id'],
         'name': json['name'],
-        'description': json['description'],
         'projectId': json['projectId'],
         'estimatedTime': json['estimatedTime'],
         'elapsedTime': json['elapsedTime'],
@@ -118,7 +111,6 @@ export function TaskResponseToJSON(value?: TaskResponse | null): any {
         
         'id': value.id,
         'name': value.name,
-        'description': value.description,
         'projectId': value.projectId,
         'estimatedTime': value.estimatedTime,
         'elapsedTime': value.elapsedTime,

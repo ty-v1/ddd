@@ -358,6 +358,77 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MoveTaskRequest'
+  '/projects/{projectId}/tasks/{taskId}/comments':
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: taskId
+        in: path
+        required: true
+    get:
+      summary: List comments
+      tags: []
+      responses: {}
+      operationId: get-projects-projectId-tasks-taskId-comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ''
+        description: ''
+    post:
+      summary: ''
+      operationId: post-projects-projectId-tasks-taskId-comments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+  '/projects/{projectId}/tasks/{taskId}/comments/{commentId}':
+    parameters:
+      - schema:
+          type: string
+        name: projectId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: taskId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: commentId
+        in: path
+        required: true
+    put:
+      summary: Update comment
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+      operationId: put-projects-projectId-tasks-taskId-comments-commentId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommentRequest'
 components:
   schemas:
     ProjectResponse:
@@ -385,6 +456,29 @@ components:
       required:
         - id
         - name
+        - description
+        - createDateTime
+        - updateDateTime
+    CommentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 01FBBSWQX4EKDJ4VQHFNBCRPZQ
+        description:
+          type: string
+          example: 自作Webアプリ
+        createDateTime:
+          type: string
+          format: date-time
+          example: '2021-01-01T11:00:00.0Z'
+        updateDateTime:
+          type: string
+          example: '2021-01-01T11:00:00.0Z'
+          format: date-time
+      required:
+        - id
         - description
         - createDateTime
         - updateDateTime
@@ -476,10 +570,6 @@ components:
           type: string
           maxLength: 32
           description: タスク名
-        description:
-          type: string
-          maxLength: 512
-          description: タスクの説明
         projectId:
           type: string
           format: uuid
@@ -513,7 +603,6 @@ components:
       required:
         - id
         - name
-        - description
         - projectId
         - estimatedTime
         - elapsedTime
@@ -607,6 +696,24 @@ components:
       required:
         - name
       description: ''
+    CreateCommentRequest:
+      title: CreateCommentRequest
+      type: object
+      properties:
+        description:
+          type: string
+          description: カラム名
+      required:
+        - description
+    UpdateCommentRequest:
+      title: CreateCommentRequest
+      type: object
+      properties:
+        description:
+          type: string
+          description: カラム名
+      required:
+        - description
     MoveTaskRequest:
       title: MoveTaskRequest
       type: object
@@ -631,6 +738,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectResponse'
+    ListCommentResponse:
+      title: ListCommentResponse
+      type: object
+      description: ''
+      properties:
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentResponse'
     ListColumnResponse:
       title: ListColumnResponse
       type: object

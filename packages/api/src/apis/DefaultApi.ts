@@ -18,9 +18,15 @@ import {
     ColumnResponse,
     ColumnResponseFromJSON,
     ColumnResponseToJSON,
+    CommentResponse,
+    CommentResponseFromJSON,
+    CommentResponseToJSON,
     CreateColumnRequest,
     CreateColumnRequestFromJSON,
     CreateColumnRequestToJSON,
+    CreateCommentRequest,
+    CreateCommentRequestFromJSON,
+    CreateCommentRequestToJSON,
     CreateLabelRequest,
     CreateLabelRequestFromJSON,
     CreateLabelRequestToJSON,
@@ -54,6 +60,9 @@ import {
     UpdateColumnRequest,
     UpdateColumnRequestFromJSON,
     UpdateColumnRequestToJSON,
+    UpdateCommentRequest,
+    UpdateCommentRequestFromJSON,
+    UpdateCommentRequestToJSON,
     UpdateLabelRequest,
     UpdateLabelRequestFromJSON,
     UpdateLabelRequestToJSON,
@@ -89,9 +98,21 @@ export interface GetProjectsProjectIdTasksTaskIdRequest {
     taskId: string;
 }
 
+export interface GetProjectsProjectIdTasksTaskIdCommentsRequest {
+    projectId: string;
+    taskId: string;
+    body?: object;
+}
+
 export interface PostProjectsProjectIdColumnsRequest {
     projectId: string;
     createColumnRequest?: CreateColumnRequest;
+}
+
+export interface PostProjectsProjectIdTasksTaskIdCommentsRequest {
+    projectId: string;
+    taskId: string;
+    createCommentRequest?: CreateCommentRequest;
 }
 
 export interface PostProjectsProjectIdTasksTaskIdMoveRequest {
@@ -153,6 +174,13 @@ export interface PutProjectsProjectIdColumnsColumnIdRequest {
     projectId: string;
     columnId: string;
     updateColumnRequest?: UpdateColumnRequest;
+}
+
+export interface PutProjectsProjectIdTasksTaskIdCommentsCommentIdRequest {
+    projectId: string;
+    taskId: string;
+    commentId: string;
+    updateCommentRequest?: UpdateCommentRequest;
 }
 
 /**
@@ -348,6 +376,42 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * List comments
+     */
+    async getProjectsProjectIdTasksTaskIdCommentsRaw(requestParameters: GetProjectsProjectIdTasksTaskIdCommentsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getProjectsProjectIdTasksTaskIdComments.');
+        }
+
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling getProjectsProjectIdTasksTaskIdComments.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/{taskId}/comments`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.body as any,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * List comments
+     */
+    async getProjectsProjectIdTasksTaskIdComments(requestParameters: GetProjectsProjectIdTasksTaskIdCommentsRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.getProjectsProjectIdTasksTaskIdCommentsRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * カラム追加
      */
     async postProjectsProjectIdColumnsRaw(requestParameters: PostProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ColumnResponse>> {
@@ -377,6 +441,41 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async postProjectsProjectIdColumns(requestParameters: PostProjectsProjectIdColumnsRequest, initOverrides?: RequestInit): Promise<ColumnResponse> {
         const response = await this.postProjectsProjectIdColumnsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async postProjectsProjectIdTasksTaskIdCommentsRaw(requestParameters: PostProjectsProjectIdTasksTaskIdCommentsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CommentResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling postProjectsProjectIdTasksTaskIdComments.');
+        }
+
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling postProjectsProjectIdTasksTaskIdComments.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/{taskId}/comments`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateCommentRequestToJSON(requestParameters.createCommentRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CommentResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async postProjectsProjectIdTasksTaskIdComments(requestParameters: PostProjectsProjectIdTasksTaskIdCommentsRequest, initOverrides?: RequestInit): Promise<CommentResponse> {
+        const response = await this.postProjectsProjectIdTasksTaskIdCommentsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -777,6 +876,47 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async putProjectsProjectIdColumnsColumnId(requestParameters: PutProjectsProjectIdColumnsColumnIdRequest, initOverrides?: RequestInit): Promise<ColumnResponse> {
         const response = await this.putProjectsProjectIdColumnsColumnIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update comment
+     */
+    async putProjectsProjectIdTasksTaskIdCommentsCommentIdRaw(requestParameters: PutProjectsProjectIdTasksTaskIdCommentsCommentIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CommentResponse>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling putProjectsProjectIdTasksTaskIdCommentsCommentId.');
+        }
+
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling putProjectsProjectIdTasksTaskIdCommentsCommentId.');
+        }
+
+        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
+            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling putProjectsProjectIdTasksTaskIdCommentsCommentId.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/projects/{projectId}/tasks/{taskId}/comments/{commentId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateCommentRequestToJSON(requestParameters.updateCommentRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CommentResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Update comment
+     */
+    async putProjectsProjectIdTasksTaskIdCommentsCommentId(requestParameters: PutProjectsProjectIdTasksTaskIdCommentsCommentIdRequest, initOverrides?: RequestInit): Promise<CommentResponse> {
+        const response = await this.putProjectsProjectIdTasksTaskIdCommentsCommentIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
