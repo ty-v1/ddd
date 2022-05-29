@@ -1,23 +1,7 @@
 import React from 'react';
 import { Duration } from '@js-joda/core';
 import { useStopWatch } from '@/component/stopwatch/useStopWatch';
-
-const formatDuration: (duration: Duration) => string = (duration) => {
-  const elapsedSecond = duration.seconds();
-  const hour = Math.floor(duration.seconds() / 3600)
-    .toString(10);
-  let r = elapsedSecond % 3600;
-
-  const minute = Math.floor(r / 60)
-    .toString(10)
-    .padStart(2, '0');
-  r = r % 60;
-
-  const second = r.toString(10)
-    .padStart(2, '0');
-
-  return `${hour}:${minute}:${second}`;
-};
+import { formatDuration } from '@/util/duration';
 
 type StopWatchProps = {
   readonly value: Duration | undefined;

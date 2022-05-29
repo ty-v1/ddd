@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Meta } from '@storybook/react';
-import { KanbanPage } from '@/page/KanbanPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ApiContext } from '@/hook/api/ApiContext';
-import { DefaultApi } from 'api';
+import { Configuration, DefaultApi } from 'api';
+import { TaskPage } from '@/page/task/TaskPage';
 
-KanbanPage.displayName = 'KanbanPage';
+TaskPage.displayName = 'TaskPage';
 
 export default {
-  component: KanbanPage,
-  title: 'KanbanPage',
+  component: TaskPage,
+  title: 'Page/TaskPage',
 } as Meta;
 
 const queryClient = new QueryClient({
@@ -19,13 +19,21 @@ const queryClient = new QueryClient({
     },
   },
 });
-const api = new DefaultApi();
+
+// TODO path to mock sever
+const api = new DefaultApi(
+  new Configuration({
+    basePath: 'http://127.0.0.1:3100',
+  })
+);
 
 const Template = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ApiContext.Provider value={{api}}>
-        <KanbanPage/>
+      <ApiContext.Provider value={{ api }}>
+        <Suspense fallback="loading">
+          <TaskPage/>
+        </Suspense>
       </ApiContext.Provider>
     </QueryClientProvider>
   );
